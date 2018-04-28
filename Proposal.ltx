@@ -1,19 +1,14 @@
 % !TEX TS-program = lualatex
 % !TEX encoding = UTF-8 Unicode
 
-% This is a simple template for a LaTeX document using the "article" class.
-% See "book", "report", "letter" for other types of document.
 
-\documentclass[11pt,draft]{article} % use larger type; default would be 10pt
+\documentclass[11pt,draft]{article} 
 \usepackage[utf8]{inputenc} % set input encoding (not needed with XeLaTeX)
 
-%%% Examples of Article customizations
-% These packages are optional, depending whether you want the features they provide.
-% See the LaTeX Companion or other references for full information.
 
 %%% PAGE DIMENSIONS
 \usepackage{geometry} % to change the page dimensions
-\geometry{a4paper} % or letterpaper (US) or a5paper or....
+\geometry{a4paper} 
 
 
 \usepackage{graphicx} % support the \includegraphics command and options
@@ -29,11 +24,11 @@
 % These packages are all incorporated in the memoir class to one degree or another...
 
 %%% HEADERS & FOOTERS
-%\usepackage{fancyhdr} % This should be set AFTER setting up the page geometry
-%\pagestyle{fancy} % options: empty , plain , fancy
-%\renewcommand{\headrulewidth}{0pt} % customise the layout...
-%\lhead{}\chead{}\rhead{}
-%\lfoot{}\cfoot{\thepage}\rfoot{}
+\usepackage{fancyhdr} % This should be set AFTER setting up the page geometry
+\pagestyle{fancy} % options: empty , plain , fancy
+\renewcommand{\headrulewidth}{0pt} % customise the layout...
+\lhead{}\chead{}\rhead{}
+\lfoot{}\cfoot{\thepage}\rfoot{}
 
 \usepackage[
     style=numeric-comp,
@@ -57,7 +52,7 @@
 
 \title{A curious reason for autonomous space exploration: Project proposal (DRAFT)}
 \author{Sophie Taylor n6362575}
-%\date{} % Activate to display a given date or no date (if empty),
+\date{} % Activate to display a given date or no date (if empty),
          % otherwise the current date is printed 
 
 \begin{document}
@@ -98,7 +93,7 @@ Is the data compressed by the agent in a format and size suitable for transmissi
 \subsection{Can meaningful models be extracted?}
 As the goal of science is to build models of the universe in order to deepen our understanding, we would like to be able to understand the learned models. Compared to non-trivial deep neural nets, which are notoriously opaque to human understanding, it is desirable for the agent to create sparse models in the form of some symbolic language.
 \subsection{Background knowledge versus tabula rasa}
-Investigate the performance of the agent when given basic knowledge of physics, such as Newton's laws and some constants.
+How much prior knowledge should be given? Giving a model may be more harmful than starting with a blank slate, as it may first have to unlearn the model. An example may be moving from a geocentric model of the solar system to a heliocentric model. Alternatively, it may make it hard to break past an abstraction, for example going from Newtonian gravity to general relativity. Of course, this depends on the capabilities of the chosen method of automatic model creation. As such, we shall investigate the performance of the agent when given basic knowledge of physics, such as Newton's laws and some constants, and compare its performance against a blank slate, and a highly unphysical model.
 
 \subsection{Can we describe our hypotheses, actions and observations in modal logic?}
 Formalising our thought history in logic may help to find better models. For example, we may be able to pose our questions to an SMT solver such as Z3\cite{de_moura_z3_2008}.
@@ -115,7 +110,7 @@ Possible options include neural networks, or an topological approach such as \ci
 \subsubsection{What reinforcement learning algorithm should be chosen?}
 Episodic learning is a seemingly appropriate technique to employ, enabling an agent to "look back" at past episodes in order to . The specific choice depends on the technique used for deciding actions.
 \subsubsection{How can the agent move through the action space?}
-By performing experiments. Thus, actions correspond to experiments with specific control variables.
+By performing experiments. Thus, actions correspond to experiments with specific control variables. 
 \subsubsection{How can the agent perform experiments?}
 Control variables for continuous data corresponds to the base topological space of a fibre bundle. The time series is the fibre at that point.
 \subsubsection{What data is to be used for testing?}
