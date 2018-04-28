@@ -14,9 +14,7 @@
 %%% PAGE DIMENSIONS
 \usepackage{geometry} % to change the page dimensions
 \geometry{a4paper} % or letterpaper (US) or a5paper or....
-% \geometry{margin=2in} % for example, change the margins to 2 inches all round
-% \geometry{landscape} % set up the page for landscape
-%   read geometry.pdf for detailed page layout information
+
 
 \usepackage{graphicx} % support the \includegraphics command and options
 
@@ -40,7 +38,6 @@
 \usepackage[
     style=numeric-comp,
     sortlocale=en_AU,
-    %natbib=true,
     url=false, 
     doi=true,
     eprint=false
@@ -77,13 +74,13 @@ Reinforcement learning algorithms are training algorithms, designed to maximise 
 \subsection{Artificial curiosity}
 \textcite{hutchison_coherence_2011} introduces the concept of \emph{compression coherence}, as a proposed measure for curiosity. It evaluates sequential observations in terms of how adding new data increases the compression ratio, signifying an increase in model accuracy, or understanding. \textcite{graziano_artificial_2011} builds on and generalises this to arbitrary adaptive compressors, motivated by an autonomous space science robot.
 \subsection{Compression}
-\textcite{steinruecken_lossless_2014} is a mathematically rigorous approach to the fundamentals of lossless data compression, for compressing objects such as sequences, sets, and multisets. \textcite{steinruecken_compressing_2016} expands on compressing other combinitorial objects. \textcite{mahoney_adaptive_2005} introduces using adaptive weighing of compression models via primitive neural networks.
+\textcite{steinruecken_lossless_2014} is a mathematically rigorous approach to the fundamentals of lossless data compression, for compressing objects such as sequences, sets, and multisets. \textcite{steinruecken_compressing_2016} expands on compressing other combinitorial objects. \textcite{mahoney_adaptive_2005} introduces using adaptive weighting of compression models via primitive neural networks.
 \subsection{Information theory}
 \subsection{Induction}
 Induction can be described as the problem of how we can justifiably extrapolate observations in order to make predictions. \textcite{rathmanner_philosophical_2011} is an exposition on Solomonoff induction, a mathematical formalisation of Occam's Razor, and Epicurus' Multiple Explainations theory, combined with Kolmogorov complexity in order to predict the next symbol of an observed sequence.
 \subsection{Model building}
 There are many approaches to building predictive models of data. Some of the techniques particularly relevant to our setting are Gaussian processes \autocite{duvenaud_automatic_2014} and genetic algorithms such as used in Eureqa \autocite{schmidt_distilling_2009}.
-\subsubsection{Probabilistic modeling}
+\subsubsection{Probabilistic graphical models}
 \subsection{Autonomous agents}
 \subsection{Cognitive architecture}
 \textcite{frank_curiosity_2014} describes an architecture for a robotic humanoid, designed for low-latency motion planning and control of a large number of continuous actuators with a high degree of freedom.
@@ -104,12 +101,12 @@ As the goal of science is to build models of the universe in order to deepen our
 Investigate the performance of the agent when given basic knowledge of physics, such as Newton's laws and some constants.
 
 \subsection{Can we describe our hypotheses, actions and observations in modal logic?}
-Formalising our thought history in logic may help to find better models, such as by SMT provers.
+Formalising our thought history in logic may help to find better models. For example, we may be able to pose our questions to an SMT solver such as Z3\cite{de_moura_z3_2008}.
 
 
 
 \section{Plan}
-\subsection{Questions to be resolved during implementation}
+\subsection{Questions to be resolved for implementation}
  The following questions must be answered before implementation can begin.
 \subsubsection{How can curiosity be usefully integrated as an intrinsic motivation?}
 While there are existing cognitive architectures with the ability to specify an arbitrary reward, they may be poorly suited for curious agents whose primary purpose is to build models, rather than to exploit models. \textcite{frank_curiosity_2014} seems to come closest to what we desire.
@@ -124,14 +121,17 @@ Control variables for continuous data corresponds to the base topological space 
 \subsubsection{What data is to be used for testing?}
 Generated data for continuous models, such as damped oscillators, and a thrown projectile, including variations with messy terms such as drag. 
 \subsubsection{How to build models?}
-The two chief candidates are \autocite{duvenaud_automatic_2014} and \autocite{schmidt_distilling_2009}. \autocite{schmidt_distilling_2009} has the advantage of being implemented as a COTS software package, free for academic use, whereas \autocite{duvenaud_automatic_2014} may allow more flexibility and not having to spend time learning the API of the software package. Of course, the technique may also be reimplemented, but this may not be warranted.
+The two chief candidates are \autocite{duvenaud_automatic_2014} and \autocite{schmidt_distilling_2009}. \autocite{schmidt_distilling_2009} has the advantage of being implemented as a COTS software package, free for academic use, whereas \autocite{duvenaud_automatic_2014} may allow more flexibility and not having to spend time learning the API of the software package. Of course, the techniques in \autocite{schmidt_distilling_2009} may also be reimplemented, but this may not be warranted.
 \subsubsection{When should we build new models?}
 Should building new models be part of the compressor that happens automatically, or should it be an action exposed to the reinforcement learning algorithm?
+
+\subsection{Implementation language}
+The design will be implemented in Haskell. The two chief options were Haskell and Python. While Python has the advantage of being easy to start protoyping with, and native TensorFlow bindings, it is much more difficult to debug and refactor than Haskell. Haskell has the advantage of being a lazy functional programming language, meaning mathematically-oriented software is much easier to read and write. What cemented Haskell as the superior choice due to the author's familarity with the language and it's various frameworks.
 
 \subsection{Outline of design}
 The agent loop's is projected to look like the following:
 
-\subsubsection{Decide upon which experiments to perform}
+\subsubsection{Choose experiments to perform}
 This will be done by the chosen high-level control structure, trained by the chosen reinforcement learning algorithm.
 \subsubsection{Get observation}
 Execution of the chosen action. This may be, for example, simply executing the simulated gathering function with new parameters.
