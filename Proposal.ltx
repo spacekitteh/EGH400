@@ -121,7 +121,7 @@ Should building new models be part of the compressor that happens automatically,
 The design will be implemented in Haskell. The two chief options were Haskell and Python. While Python has the advantage of being easy to start protoyping with, and native TensorFlow bindings, it is much more difficult to debug and refactor than Haskell. Haskell has the advantage of being a lazy functional programming language, meaning mathematically-oriented software is much easier to read and write. What cemented Haskell as the superior choice due to the author's familarity with the language and it's various frameworks.
 
 \subsection{Outline of design}
-The agent loop's is projected to look like the following:
+The agent's loop is projected to look like the following:
 
 \subsubsection{Choose experiments to perform}
 This will be done by the chosen high-level control structure, trained by the chosen reinforcement learning algorithm.
