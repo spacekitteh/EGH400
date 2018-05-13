@@ -78,7 +78,7 @@ There are many approaches to building predictive models of data. Some of the tec
 \textcite{frank_curiosity_2014} describes an architecture for a robotic humanoid, designed for low-latency motion planning and control of a large number of continuous actuators with a high degree of freedom.
 
 \subsection{Modal logic}
-Modal logics are logical systems with more operators than standard classical (or intuinistic) logic. Some examples are doxastic logic, a logic of belief; epistemic logic, a logic of knowledge; and dynamic logic, a logic of actions \parencite(harel_dynamic_2000).
+Modal logics are logical systems with more operators than standard classical (or intuinistic) logic. Some examples are doxastic logic, a logic of belief; epistemic logic, a logic of knowledge; and dynamic logic, a logic of actions \autocite{harel_dynamic_2000}. 
 
 
 \section{Experiments and investigation}
@@ -93,7 +93,7 @@ As the goal of science is to build models of the universe in order to deepen our
 How much prior knowledge should be given? Giving a model may be more harmful than starting with a blank slate, as it may first have to unlearn the model. An example may be moving from a geocentric model of the solar system to a heliocentric model. Alternatively, it may make it hard to break past an abstraction, for example going from Newtonian gravity to general relativity. Of course, this depends on the capabilities of the chosen method of automatic model creation. As such, we shall investigate the performance of the agent when given basic knowledge of physics, such as Newton's laws and some constants, and compare its performance against a blank slate, and a highly unphysical model.
 
 \subsection{Can we describe our hypotheses, actions and observations in modal logic?}
-Formalising our thought history in logic may help to find better models. For example, we may be able to pose our questions to an SMT solver such as Z3 \autocite{de_moura_z3_2008}.
+Formalising our thought history in logic may help to find better models. For example, we may be able to pose our questions to an SMT solver such as Z3 \autocite{de_moura_z3_2008}. Finding a modality to capture the notions of "interesting" and "understanding" would presumably be required. Action modalities, such as observation and hypothesis testing, are likely to be straightforward to express in terms of dynamic logic.
 
 
 
@@ -111,11 +111,11 @@ By performing experiments. Thus, actions correspond to experiments with specific
 \subsubsection{How can the agent perform experiments?}
 Control variables for continuous data corresponds to the base topological space of a fibre bundle. The time series is the fibre at that point.
 \subsubsection{What data is to be used for testing?}
-Generated data for continuous models, such as damped oscillators, and a thrown projectile, including variations with messy terms such as drag. 
+Generated data for continuous models, such as damped oscillators, and a thrown projectile, including variations with messy terms such as drag. Alternatively, for testing a probabilistic discrete domain where a closed form solution doesn't exist, a StarCraft 2 instance, with experimental control inputs being inputs to the game \autocite{vinyals_starcraft_2017}.
 \subsubsection{How to build models?}
 The two chief candidates are \autocite{duvenaud_automatic_2014} and \autocite{schmidt_distilling_2009}. \autocite{schmidt_distilling_2009} has the advantage of being implemented as a COTS software package, free for academic use, whereas \autocite{duvenaud_automatic_2014} may allow more flexibility and not having to spend time learning the API of the software package. Of course, the techniques in \autocite{schmidt_distilling_2009} may also be reimplemented, but this may not be warranted.
 \subsubsection{When should we build new models?}
-Should building new models be part of the compressor that happens automatically, or should it be an action exposed to the reinforcement learning algorithm?
+Should building new models be part of the compressor that happens automatically, or should it be an action exposed to the reinforcement learning algorithm? 
 
 \subsection{Implementation language}
 The design will be implemented in Haskell. The two chief options were Haskell and Python. While Python has the advantage of being easy to start protoyping with, and native TensorFlow bindings, it is much more difficult to debug and refactor than Haskell. Haskell has the advantage of being a lazy functional programming language, meaning mathematically-oriented software is much easier to read and write. What cemented Haskell as the superior choice due to the author's familarity with the language and it's various frameworks.
