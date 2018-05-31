@@ -1,0 +1,27 @@
+* Space exploration is hard
+* One of the reasons for this is significant latency
+* Therefore, autonomy is very helpful
+* How do we create autonomous systems?
+* Typically, one creates a system which may take many different actions, and use design a control system to choose which action to take and when
+* Two major approaches: control theory and artificial intelligence
+* Control theory works great when we can mathematically formalise the system, its environment, and the desired behaviour; in other words, it's a bottom-up approach
+* Artificial intelligence can be described as a top-down approach, and provides techniques to use when the problem is hard to mathematically characterise
+* But we still have the problem of trying to describe the desired behaviour
+* How do we mathematically describe "do some science" when we don't know what we are looking for?
+* We might define science as systematic curiosity
+* That's great, but we've just shifted the goal posts - what is curiosity?
+* We aren't curious about things we already understand completely - we aren't curious about whether the bed we fall asleep on will still be there when we wake up
+* We aren't curious about things which appear, to the individual, indistinguishable from randomness - a toddler won't be interested in the contents of the various proofs in a doctoral thesis on when she doesn't understand that the squiggles on the paper denote letters
+* Thus, curiosity can be phrased as a nonmonotonic measure related to similarity to previously understood information
+* This is the realm of information theory
+* One well-known field of information theory is compression theory
+* Compression works by finding and exploiting similarity in data
+* Thus, we can use compression to formalise curiosity
+* Compression works by creating models of the data
+* This is exactly what we want to do with the data anyway - analyse and discover the underlying mechanisms in its production
+* This realisation leads to many interesting questions. Some include:
+  - How can we exploit these models for the purpose of science?
+  - How can we exploit these models for the purpose of improving the autonomy of our hypothetical robotic cosmonaut?
+* Most extant compression doesn't actively ask for additional data to improve its models
+* But that is exactly what we want to use it for
+* We propose to investigate compression schemes based on physical principles and their use in autonomous agents guided by artificial curiosity, which can perform scientific experiments to gather more data for model building.
