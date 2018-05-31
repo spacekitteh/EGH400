@@ -10,22 +10,18 @@
 ===========
 
 
-* Due to the communication latency involved in space exploration, planetary rovers and other space science platforms are increasingly being designed to maximise their autonomy.
-* This typically involves mathematically describing desired behaviours.
-- - - - - - - - - - - - - - - -
+* Planetary rovers, and other space science platforms, are increasingly being designed to maximise their autonomy.
+* This requires mathematically describing desired behaviours.
 * How do we mathematically describe "do some science" when we don't know what we are looking for?
-* We might define science as systematic curiosity - but what is curiosity?
+* We define science as systematic curiosity
 * Curiosity as a behaviour may be described as trying to maximising interestingness.
-* We aren't curious about things we already understand completely - we aren't curious about the thousandth letter in a string if the previous letters have been identical
-* We aren't curious about things which appear, to the individual, indistinguishable from randomness - an illiterate toddler won't be interested in a doctoral thesis 
-* Thus, an information-theoretic description of interestingness is a nonmonotonic measure of similarity to previously understood information
-* Let's use the tools of information theory, namely, compression theory
-* Compression works by finding and exploiting similarity in data by creating probabilistic models
-* Our ability to understand something is synonymous with our ability to model it
-* This is exactly what we want to do with the data anyway - analyse it to discover and model the process which creates it
+* We aren't curious about things which are completely predictable, nor about things which appear completely random
+* Thus, one information-theoretic approach to interestingness is a nonmonotonic measure of similarity to previously understood information
+* One application of information theory, compression, works by finding and exploiting similarity in the given data by creating probabilistic models
+* This is exactly why we want the data anyway - analyse it to discover and model the process which creates it
 * Thus, we can use compression to formalise curiosity
 * This realisation leads to many interesting questions. Some include:
   - How can we use these models for the purpose of science?
-  - How can we use them to improve the autonomy of our hypothetical robotic cosmonaut?
+  - Or use them to improve the autonomy of our hypothetical robotic cosmonaut?
 * Most extant compression doesn't actively ask for additional data to improve its models
 * We propose to investigate compression schemes based on physical principles and their use in autonomous agents guided by artificial curiosity, which can perform scientific experiments to gather more data for model building.
