@@ -18,7 +18,8 @@
 * Compression works by finding and exploiting similarity in data
 * Thus, we can use compression to formalise curiosity
 * Compression works by creating models of the data
-* This is exactly what we want to do with the data anyway - analyse and discover the underlying mechanisms in its production
+* Our ability to understand something is synonymous with our ability to model it
+* This is exactly what we want to do with the data anyway - analyse it to discover and model the process which creates it
 * This realisation leads to many interesting questions. Some include:
   - How can we exploit these models for the purpose of science?
   - How can we exploit these models for the purpose of improving the autonomy of our hypothetical robotic cosmonaut?
