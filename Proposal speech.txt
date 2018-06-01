@@ -9,7 +9,11 @@
 * But we still have the problem of trying to describe the desired behaviour
 ===========
 
-
+[ * Interplanetary pace exploration is hard.
+    - One reason is due to high latency. The speed of light is terribly slow.
+    - Thus, it is desirable to reduce human interaction with robotic cosmonauts as much as possible
+    - But describing high-level behaviours is very hard
+] 
 * Planetary rovers, and other space science platforms, are increasingly being designed to maximise their autonomy.
 * This requires mathematically describing desired behaviours.
 * How do we mathematically describe "do some science" when we don't know what we are looking for?
@@ -17,16 +21,19 @@
 * Curiosity as a behaviour may be described as trying to maximising interestingness.
 * We aren't curious about things which are completely predictable, nor about things which appear completely random
 * This is the realm of information theory.
-* In light of this, interestingness is a nonmonotonic measure of similarity to previously understood information
-* Understanding something is synonymous with being able to model it.
-* One application of information theory, compression, works by finding and exploiting similarity in the given data by creating probabilistic models
+* In light of this, interestingness is a nonmonotonic measure of similarity to previously understood, or modeled, information
+----
+[Compression theory is a subfield of information theory
+FN: Coherence progress paper, Artificial Curiosity in Space Exploration paper]
+* Compression works by finding and exploiting similarity in the given data by creating probabilistic models
 * This is exactly why we want the data - to analyse it to discover and model the process which creates it
 * Thus, we can use compression to formalise curiosity, for example, coherence progress.
-* This realisation leads to many interesting questions. Some include:
+----
+* This realisation leads to interesting questions, such as:
   - How can we use these models for the purpose of science?
   - Or use them to improve the autonomy of our hypothetical robotic cosmonaut?
 * Most extant compression doesn't actively ask for additional data (in our case, perform experiments) to improve its models
 * We propose to investigate pro-active, physically-based compression schemes for use in autonomous agents.
 * This can provide a multitude of systematic advantages.
-* We shall create a reinforcement learning skeleton app in Haskell, simulate experimental data with a damped oscillator plus noise, and pass it on to several physically-based data regression applications. We'll take the resulting models, compress the data, and measure our progress in terms of coherence progress.
-* The classes of actions available to the RL-trained agent shall be to completely reanalyse the data, or try to gather new sets of data by varying the natural frequency and damping ratio.
+* We shall create a reinforcement learning skeleton app in Haskell, simulate experimental data with a damped oscillator plus noise, and pass it on to physically-based regression applications. We'll take the resulting models, arithmetically code the data, and measure our progress in terms of coherence progress.
+* The classes of actions available to the agent shall be to completely reanalyse the data, or try to gather new sets of data by varying the natural frequency and damping ratio.
