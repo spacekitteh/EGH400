@@ -13,14 +13,24 @@
     - One reason is due to high latency. The speed of light is terribly slow.
     - Thus, it is desirable to reduce human interaction with robotic cosmonauts as much as possible
     - But describing high-level behaviours is very hard
-] 
+]
+ 
 * Planetary rovers, and other space science platforms, are increasingly being designed to maximise their autonomy.
 * This requires mathematically describing desired behaviours.
 * How do we mathematically describe "do some science" when we don't know what we are looking for?
-* Let's define science as systematic curiosity.
+----
+
+[ * Let's define science as systematic curiosity.
+    - But this is just shifting the goalposts
+    - So what is curiosity?
+]
+
 * Curiosity as a behaviour may be described as trying to maximising interestingness.
 * We aren't curious about things which are completely predictable, nor about things which appear completely random
-* This is the realm of information theory.
+----
+
+[ * This is the realm of information theory.
+    - 
 * In light of this, interestingness is a nonmonotonic measure of similarity to previously understood, or modeled, information
 ----
 [Compression theory is a subfield of information theory
