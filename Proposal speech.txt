@@ -9,7 +9,7 @@
 * But we still have the problem of trying to describe the desired behaviour
 ===========
 
-[ * Interplanetary pace exploration is hard.
+[ * Interplanetary space exploration is hard.
     - One reason is due to high latency. The speed of light is terribly slow.
     - Thus, it is desirable to reduce human interaction with robotic cosmonauts as much as possible
     - But describing high-level behaviours is very hard
@@ -17,7 +17,7 @@
  
 * Planetary rovers, and other space science platforms, are increasingly being designed to maximise their autonomy.
 * This requires mathematically describing desired behaviours.
-* How do we mathematically describe "do some science" when we don't know what we are looking for?
+* But how do we mathematically describe "do some science" when we don't know what we are looking for?
 ----
 
 [ * Let's define science as systematic curiosity.
@@ -30,20 +30,41 @@
 ----
 
 [ * This is the realm of information theory.
-    - 
-* In light of this, interestingness is a nonmonotonic measure of similarity to previously understood, or modeled, information
+    - Tools to study causal processes and feedback, such as physical processes, are less developed
+    - One such tool is directed information theory
+]
+
+* Thus, interestingness is a nonmonotonic measure of similarity to previously understood, or modeled, information
+
 ----
-[Compression theory is a subfield of information theory
-FN: Coherence progress paper, Artificial Curiosity in Space Exploration paper]
+
+[ * Compression theory is a subfield of information theory
+    - We know how to (practically) optimally encode data given a probabilistic generative model
+    - Thus compression theory focuses on techniques to produce probabilistic models of data
+
+FN: Coherence progress paper, Artificial Curiosity in Space Exploration paper, Lossless Data Compression thesis, Matt Mahoney compression and AI page]
+
 * Compression works by finding and exploiting similarity in the given data by creating probabilistic models
 * This is exactly why we want the data - to analyse it to discover and model the process which creates it
-* Thus, we can use compression to formalise curiosity, for example, coherence progress.
+* This means we can use compression to formalise curiosity, for example, coherence progress.
 ----
-* This realisation leads to interesting questions, such as:
-  - How can we use these models for the purpose of science?
-  - Or use them to improve the autonomy of our hypothetical robotic cosmonaut?
-* Most extant compression doesn't actively ask for additional data (in our case, perform experiments) to improve its models
+
+[ * This realisation leads to interesting questions, such as:
+    - How can we use these models for the purpose of science?
+    - Or use them to improve the autonomy of our hypothetical robotic cosmonaut?
+    - Is the resulting compressed data suitable for transmission to Earth?
+
+]
+
+* Most extant compression doesn't actively ask for additional data (meaining, in our case, perform more experiments) to improve its models
 * We propose to investigate pro-active, physically-based compression schemes for use in autonomous agents.
-* This can provide a multitude of systematic advantages.
-* We shall create a reinforcement learning skeleton app in Haskell, simulate experimental data with a damped oscillator plus noise, and pass it on to physically-based regression applications. We'll take the resulting models, arithmetically code the data, and measure our progress in terms of coherence progress.
-* The classes of actions available to the agent shall be to completely reanalyse the data, or try to gather new sets of data by varying the natural frequency and damping ratio.
+----
+
+[ * Risks
+    - Schedule slippage due to bugs
+    -  
+FN: Eureqa]
+
+* We shall create a test application in Haskell which simulates experimental data with a damped oscillator plus noise, and passes it on to physically-based regression applications. Then, we'll take the resulting models, arithmetically code the data, and, if compression is poor, prompt for additional data. We measure our increasingly complex models in terms of coherence progress.
+
+* Then, we shall broaden the types of available simulated data (for example, a projectile) and attempt to train an autonomous agent via reinforcement learning with coherence progress as a reward metric.
