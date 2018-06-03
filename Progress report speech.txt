@@ -1,5 +1,7 @@
-* Space exploration is hard
-* One of the reasons for this is significant latency
+Space exploration is hard. One of the reasons for this is the distance. Despite the speed of light being incredibly fast to us, the universe is very big. The radio propagation time between Earth and a rover on mars, for example, can be anywhere between 4 minutes and 24 minutes, depending on the time of (each planet's) year. 
+
+The distance also means enormous free space path loss - For example, an S band transmission experiences between 257 and 274 dB of loss. This greatly reduces the Shannon capacity of the communication channel.
+----
 * Therefore, autonomy is very helpful
 * How do we create autonomous systems?
 * Typically, one creates a system which may take many different actions, and use design a control system to choose which action to take and when
@@ -9,11 +11,6 @@
 * But we still have the problem of trying to describe the desired behaviour
 ===========
 
-[ * Interplanetary space exploration is hard.
-    - One reason is due to high latency. The speed of light is terribly slow.
-    - Thus, it is desirable to reduce human interaction with robotic cosmonauts as much as possible
-    - But describing high-level behaviours is very hard
-]
  
 * Planetary rovers, and other space science platforms, are increasingly being designed to maximise their autonomy.
 * This requires mathematically describing desired high level behaviours.
