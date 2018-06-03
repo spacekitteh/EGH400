@@ -40,23 +40,22 @@ Compression, the study of which is field of information theory, works by finding
 
 
 ----
-Our high-level plan is the following. We shall create a test application in Haskell which simulates experimental data with a damped oscillator plus noise, and passes it on to physically-based regression applications. Then, we'll take the resulting models, arithmetically code the data, and, if compression is poor, prompt for additional data. We measure our increasingly complex models in terms of coherence progress. 
+
+[9] Our high-level plan is the following. We shall create a test application in Haskell which simulates experimental data with a damped oscillator plus noise, and passes it on to physically-based regression applications. Then, we'll take the resulting models, arithmetically code the data, and, if compression is poor, prompt for additional data. We measure our increasingly complex models in terms of coherence progress. 
 
 Then, we shall broaden the types of available simulated data (for example, a projectile) and attempt to train an autonomous agent via reinforcement learning with coherence progress as a reward metric. The methodology by which the agent performs experiments to input new data is the behaviour being trained, whether by studying new classes of data, or by changing experimental control variables.
 
 ----
 
-The simulated data is easy to produce; just a couple of lines of code. Much study and consideration of approaches to the design of the compressor has been undertaken, and implementation has just begun. It is believed that a computational-effects-based approach will be the most fruitful. This allows, among other things, the creation of models to be very modular. The very first prototype will just decide between two hard-coded models; much of work will be on interfacing to the model discovery program, Eureqa, which is based on a genetic algorithm.
+[10] The simulated data is easy to produce; just a couple of lines of code. Much study and consideration of approaches to the design of the compressor has been undertaken, and implementation has just begun. It is believed that a computational-effects-based approach will be the most fruitful. This allows, among other things, the creation of models to be very modular. The very first prototype will just decide between two hard-coded models; much of work will be on interfacing to the model discovery program, Eureqa, which is based on a genetic algorithm.
 
 
 ----
 
-Generally, the more domain-specific compression models are, the more effective they are, but the more assumptions they build on. Clearly, this is a problem when trying to discover new phenomena. Thus, only very general physical principles, such as Noether's theorem or the principle of least action, should be provided. But this may prove too much of a leap for model discovery to be effective; thus, we shall also provide additional, derived, results, such as Newtonian and Hamiltonian mechanics. The key is to *allow* their use, but not *require* it. The ability to perform various mathematical techniques, such as integral transforms is left for future research. 
-
-
+[11] Generally, the more domain-specific compression models are, the more effective they are, but the more assumptions they build on. Clearly, this is a problem when trying to discover new phenomena. Thus, only very general physical principles, such as Noether's theorem or the principle of least action, should be provided. But this may prove too much of a leap for model discovery to be effective; thus, we shall also provide additional, derived, results, such as Newtonian and Hamiltonian mechanics. The key is to *allow* their use, but not *require* it. The ability to perform various mathematical techniques, such as integral transforms is left for future research. 
 
 ----
 
+[12] If one allows a multi-pass approach to the compression, then it is straightforward to ask for, and incorporate, additional data and any new insights. However, this presents a memory problem: We don't want to keep many copies of the data around, due to the limited memory and susceptibility to corruption inherent to space systems. How to deal with this is left for future research.
 
-Much study and consideration of approaches to the design of the compressor has been undertaken, and implementation has just begun.
 ----
