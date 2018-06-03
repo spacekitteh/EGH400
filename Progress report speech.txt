@@ -1,60 +1,42 @@
 Space exploration is hard. One of the reasons for this is the distance. Despite the speed of light being incredibly fast to us, the universe is very big. The radio propagation time between Earth and a rover on Mars, for example, can be anywhere between 4 minutes and 24 minutes, depending on the time of (each planet's) year. 
 
 The distance also means enormous free space path loss - For example, an S band transmission experiences between 257 and 274 dB of loss. This greatly reduces the Shannon capacity of the communication channel, reducing the amount of science data which can be returned.
+
 ----
+
 Thus, autonomy is crucial in overcoming these barriers. We can create relatively high level, autonomous controllers which we issue high-level instructions such as "Go to that interesting rock", and expect it to navigate its way around a crater enroute without any human interaction. 
 
 We can also preprocess the collected data, such as creating and transmitting only a histogram of the data, rather than the individual datapoints. Of course, we can also compress it.
+
 ----
+
 There are two main, complimentary approaches to the creation of autonomous systems: Control theory, which is suited to low-level systems when both the plant and desired behaviour are relatively easy to mathematically model, and so-called artificial intelligence, which is suitable when we find great difficulty in modeling the plant, but can still describe the desired behaviour.
 
 It is desirable to make our robotic cosmonauts as autonomous as possible, so ideally we could just instruct them to "go do some science and report any interesting discoveries". But how can we mathematically model "Go do some science", or, for that matter, "interesting discovery"?
 
-
- 
-* Planetary rovers, and other space science platforms, are increasingly being designed to maximise their autonomy.
-* This requires mathematically describing desired high level behaviours.
-* But how do we mathematically describe "do some science" when we don't know what we are looking for?
 ----
 
-[ * Let's define science as systematic curiosity.
-    - But this is just shifting the goalposts
-    - So what is curiosity?
-]
+Let's describe science as "systematic curiosity". But what is curiosity? We may describe it as acting in order to maximise the interestingness of our observations.
 
-* Curiosity as a behaviour may be described as trying to maximise interestingness.
-* We aren't curious about things which are completely predictable, nor about things which appear completely random
-----
-
-[ * This is the realm of information theory.
-    - Tools to study causal processes and feedback, such as physical processes, are less developed
-    - One such tool is directed information theory
-]
-
-* Thus, interestingness is a nonmonotonic measure of similarity to previously understood, or modeled, information
+We aren't interested in things which are completely predictable, nor about things which appear completely random.
 
 ----
 
-[ * Compression theory is a subfield of information theory
-    - We know how to (practically) optimally encode data given a probabilistic generative model
-    - Thus compression theory focuses on techniques to produce probabilistic models of data
+When we see probability turn up in abstract concepts, such as "interaction", "understanding" or "interesting", it is helpful to turn to information theory.
 
-FN: Coherence progress paper, Artificial Curiosity in Space Exploration paper, Lossless Data Compression thesis, Matt Mahoney compression and AI page]
+Thus, interestingness is a nonmonotonic measure of similarity to previously understood, or modeled, information.
 
-* Compression works by finding and exploiting similarity in the given data by creating probabilistic models
-* This is exactly why we want the data - to analyse it to discover and model the process which creates it
-* This means we can use compression to formalise curiosity, for example, coherence progress.
 ----
 
-[ * This realisation leads to interesting questions, such as:
-    - How can we use these models for the purpose of science?
-    - Or use them to improve the autonomy of our hypothetical robotic cosmonaut?
-    - Is the resulting compressed data suitable for transmission to Earth?
+Compression, the study of which is field of information theory, works by finding and exploiting similarity in the given data by creating probabilistic models. This is exactly why we want the data - to study it to discover and model the physical processes which create it.
 
-]
+This means we can use compression to formalise curiosity, in the form of, for example, coherence progress.
 
-* Most extant compression doesn't actively ask for additional data (meaning, in our case, perform more experiments) to improve its models
-* We propose to investigate pro-active, physically-based compression schemes for use in autonomous agents.
+----
+
+Most extant compression doesn't actively ask for additional data (meaning, in our case, perform more experiments) to improve its models. We have thus chosen to investigate pro-active, physically-based compression schemes for use in autonomous agents.
+
+
 ----
 
 [ * Major risks
