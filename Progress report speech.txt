@@ -46,4 +46,4 @@ Then, we shall broaden the types of available simulated data (for example, a pro
 
 ----
 
-Generally, the more domain-specific compression models are, the more effective they are, but the more assumptions they build on. Clearly, this is a problem when trying to discover new physics. 
+Generally, the more domain-specific compression models are, the more effective they are, but the more assumptions they build on. Clearly, this is a problem when trying to discover new phenomena. Thus, only very general physical principles, such as Noether's theorem or the principle of least action, should be provided. But this may prove too much of a leap for model discovery to be effective; thus, we shall also provide more, derived results, such as Newtonian and Hamiltonian mechanics. The key is to *allow* their use, but not *require* it.
