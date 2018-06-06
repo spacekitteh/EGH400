@@ -35,7 +35,7 @@ Compression, the study of which is field of information theory, works by finding
 
 ----
 
-[8] Most extant compression schemes don't actively ask for additional data (meaning, in our case, perform more experiments) to improve its models. We have thus chosen to investigate pro-active, physically-based compression schemes for use in autonomous agents.
+[8] This provides a large number of interesting research questions, particularly on the nature of reusing the probabilistic models. Most extant compression schemes don't actively ask for additional data (meaning, in our case, perform more experiments) to improve its models. As such, we have chosen to investigate pro-active, physically-based compression schemes for use in autonomous agents.
 
 ----
 

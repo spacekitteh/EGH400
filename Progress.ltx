@@ -1,0 +1,177 @@
+% !TEX TS-program = lualatex
+% !TEX encoding = UTF-8 Unicode
+
+
+\documentclass[11pt,draft]{article} 
+\usepackage[utf8]{inputenc} % set input encoding (not needed with XeLaTeX)
+
+
+%%% PAGE DIMENSIONS
+\usepackage{geometry} % to change the page dimensions
+\geometry{a4paper} 
+
+
+\usepackage{graphicx} % support the \includegraphics command and options
+
+% \usepackage[parfill]{parskip} % Activate to begin paragraphs with an empty line rather than an indent
+
+%%% PACKAGES
+\usepackage{booktabs} % for much better looking tables
+\usepackage{array} % for better arrays (eg matrices) in maths
+\usepackage{paralist} % very flexible & customisable lists (eg. enumerate/itemize, etc.)
+\usepackage{verbatim} % adds environment for commenting out blocks of text & for better verbatim
+\usepackage{subfig} % make it possible to include more than one captioned figure/table in a single float
+% These packages are all incorporated in the memoir class to one degree or another...
+
+%%% HEADERS & FOOTERS
+\usepackage{fancyhdr} % This should be set AFTER setting up the page geometry
+\pagestyle{fancy} % options: empty , plain , fancy
+\renewcommand{\headrulewidth}{0pt} % customise the layout...
+\lhead{}\chead{}\rhead{}
+\lfoot{}\cfoot{\thepage}\rfoot{}
+
+\usepackage[
+    style=numeric-comp,
+    sortlocale=en_AU,
+    url=false, 
+    doi=true,
+    eprint=false
+]{biblatex}
+\addbibresource{Cognitive-robotics.bib}
+
+
+%%% ToC (table of contents) APPEARANCE
+\usepackage[nottoc,notlof,notlot]{tocbibind} % Put the bibliography in the ToC
+\usepackage[titles,subfigure]{tocloft} % Alter the style of the Table of Contents
+\renewcommand{\cftsecfont}{\rmfamily\mdseries\upshape}
+\renewcommand{\cftsecpagefont}{\rmfamily\mdseries\upshape} % No bold!
+
+
+\title{A curious reason for autonomous space exploration: Artificial curiosity in robotic cosmonauts (Project report))}
+\author{Sophie Taylor n6362575}
+\date{8/6/2018} % Activate to display a given date or no date (if empty),
+         % otherwise the current date is printed 
+
+\begin{document}
+\maketitle
+
+\section{Abstract}
+We discuss the notion of a cognitive architecture for an autonomous space exploration robot motivated by curiosity. We propose to implement an agent with such an architecture and investigate some of its properties.
+
+\section{Introduction}
+Space exploration is hard. One of the reasons for this is the distance. Despite the speed of light being incredibly fast to us, the universe is very big. The radio propagation time between Earth and a rover on Mars, for example, can be anywhere between 4 minutes and 24 minutes, depending on the time of (each planet's) year. The distance also means enormous free space path loss - For example, an S band transmission experiences between 257 and 274 dB of loss. This greatly reduces the Shannon capacity of the communication channel, reducing the amount of science data which can be returned.
+
+
+Autonomy is crucial in overcoming these barriers. Autonomous control reduces the need for detailed command constructions; we can create relatively high level, autonomous GNC controllers which we issue high-level instructions such as "Go to that interesting rock", and it can be expected to avoid getting stuck in a crater enroute without any human interaction. To reduce the amount of uplink bandwidth required, we can also preprocess the collected data, such as creating and transmitting only a histogram of the data, rather than the individual datapoints; we can also compress it. Combining these two functions is the goal this project is working towards.
+
+It is desirable to make our robotic cosmonauts as autonomous as possible, so ideally we could just instruct them to "go do some science and report any interesting discoveries". But how can we mathematically model "Go do some science", or, for that matter, "interesting discovery"?
+There are two main, complimentary approaches to the creation of autonomous systems: Control theory, which is suited to low-level systems when both the plant and desired behaviour are relatively easy to mathematically model, and so-called artificial intelligence, which is suitable when we find great difficulty in modeling the plant, but can still describe the desired behaviour.
+----
+
+[5] Let's describe science as "systematic curiosity". But what is curiosity? We may describe it as acting in order to maximise the interestingness of our observations.
+
+We aren't interested in things which are completely predictable, nor about things which appear completely random.
+
+----
+
+[6] When we see probability, particularly in its Bayesian interpretation, turn up in abstract concepts, such as "interaction", "understanding" or "interesting", it is helpful to turn to information theory.
+
+Thus, interestingness is a nonmonotonic measure of similarity to previously understood, or modeled, information.
+
+Compression, the study of which is field of information theory, works by finding and exploiting similarity in the given data by creating probabilistic models. This is exactly why we want the data - to study it to discover and model the physical processes which create it.
+
+----
+
+[7] This means we can use compression to formalise curiosity, in the form of, for example, coherence progress. Roughly speaking, this is the derivative of how effective our models are as we add new data: If two consecutive results are very efficiently compressed, then the difference in effectiveness is low, thus coherence progress is low; if two consecutive results are poorly understood and modeled, then they will not compress well, and the change in effectiveness is low as well. But if the adding of a new result allows the discovery of a new, more effective model, then the difference is large. Thus, we can see coherence progress captures the nonmonotonic nature of interestingness.
+
+----
+
+[8] This provides a large number of interesting research questions, particularly on the nature of reusing the probabilistic models. Most extant compression schemes don't actively ask for additional data (meaning, in our case, perform more experiments) to improve its models. As such, we have chosen to investigate pro-active, physically-based compression schemes for use in autonomous agents.
+
+----
+
+[9] Our high-level plan is the following. We are creating libraries and a test application in Haskell which simulates experimental data with a damped oscillator plus noise, and passes it on to physically-based regression applications. Then, we'll take the resulting models, arithmetically code the data, and, if compression is poor, prompt for additional data. We measure our increasingly complex models in terms of coherence progress. 
+
+Then, we shall broaden the types of available simulated data (for example, a projectile) and attempt to train an autonomous agent via reinforcement learning with coherence progress as a reward metric. The methodology by which the agent performs experiments to input new data is the behaviour being trained, whether by studying new classes of data, or by changing experimental control variables.
+
+
+\section{Literature review}
+\subsection{Reinforcement learning}
+Reinforcement learning algorithms are training algorithms, designed to maximise the expected reward from a (possibly continuous) sequence of actions of an agent in some environment. One notable class of reinforcement learning algorithms are episodic in nature, exemplified in \autocite{blundell_model-free_2016,pritzel_neural_2017}.Typically, rewards are external, such as some fitness measure. Internal rewards, on the other hand, can be considered as \emph{motivations}. One such motivation is curiosity.
+\subsection{Artificial curiosity}
+\textcite{hutchison_coherence_2011} introduces the concept of \emph{compression coherence}, as a proposed measure for curiosity. It evaluates sequential observations in terms of how adding new data increases the compression ratio, signifying an increase in model accuracy, or understanding. \textcite{graziano_artificial_2011} builds on and generalises this to arbitrary adaptive compressors, motivated by an autonomous space science robot.
+\subsection{Compression}
+\textcite{steinruecken_lossless_2014} is a mathematically rigorous approach to the fundamentals of lossless data compression, for compressing objects such as sequences, sets, and multisets. \textcite{steinruecken_compressing_2016} expands on compressing other combinitorial objects. \textcite{mahoney_adaptive_2005} introduces using adaptive weighting of compression models via primitive neural networks.
+\subsection{Information theory}
+\subsection{Induction}
+Induction can be described as the problem of how we can justifiably extrapolate observations in order to make predictions. \textcite{rathmanner_philosophical_2011} is an exposition on Solomonoff induction, a mathematical formalisation of Occam's Razor, and Epicurus' Multiple Explainations theory, combined with Kolmogorov complexity in order to predict the next symbol of an observed sequence.
+\subsection{Model building}
+There are many approaches to building predictive models of data. Some of the techniques particularly relevant to our setting are Gaussian processes \autocite{duvenaud_automatic_2014} and genetic algorithms such as used in Eureqa \autocite{schmidt_distilling_2009}.
+\subsubsection{Probabilistic graphical models}
+\subsection{Autonomous agents}
+\subsection{Cognitive architecture}
+\textcite{frank_curiosity_2014} describes an architecture for a robotic humanoid, designed for low-latency motion planning and control of a large number of continuous actuators with a high degree of freedom.
+
+\subsection{Modal logic}
+Modal logics are logical systems with more operators than standard classical (or intuinistic) logic. Some examples are doxastic logic, a logic of belief; epistemic logic, a logic of knowledge; and dynamic logic, a logic of actions \autocite{harel_dynamic_2000}. 
+
+
+\section{Experiments and investigation}
+The goal is to experiment with how curiosity can be exploited throughout all aspects of a robotic cosmonaut's design, not just its cognitive architecture. As such, we propose to first build a simple, OODA-style agent in order to experiment with various design decisions.
+\subsection{Can data compressed during learning be decompressed losslessly, within reason?}
+While the main goal of a robotic scientist is to understand the world, we would like to see the data supporting its beliefs; in addition to verifying model correctness, the data may be valuable in its own right. Thus, it is desirable for the data to be transmitted to human scientists such that they can actually retreive it.
+\subsection{Can the compressed data be sent to human scientists without further processing?}
+Is the data compressed by the agent in a format and size suitable for transmission and use by human scientists, or must it be further compressed? This serves as a sanity check on the capability of the agent to produce a meaningful model, as the better the model is at predicting the data, the better the compression.
+\subsection{Can meaningful models be extracted?}
+As the goal of science is to build models of the universe in order to deepen our understanding, we would like to be able to understand the learned models. Compared to non-trivial deep neural nets, which are notoriously opaque to human understanding, it is desirable for the agent to create sparse models in the form of some symbolic language.
+\subsection{Background knowledge versus tabula rasa}
+How much prior knowledge should be given? Giving a model may be more harmful than starting with a blank slate, as it may first have to unlearn the model. An example may be moving from a geocentric model of the solar system to a heliocentric model. Alternatively, it may make it hard to break past an abstraction, for example going from Newtonian gravity to general relativity. Of course, this depends on the capabilities of the chosen method of automatic model creation. As such, we shall investigate the performance of the agent when given basic knowledge of physics, such as Newton's laws and some constants, and compare its performance against a blank slate, and a highly unphysical model.
+
+\subsection{Can we describe our hypotheses, actions and observations in modal logic?}
+Formalising our thought history in logic may help to find better models. For example, we may be able to pose our questions to an SMT solver such as Z3 \autocite{de_moura_z3_2008}. Finding a modality to capture the notions of "interesting" and "understanding" would presumably be required. Action modalities, such as observation and hypothesis testing, are likely to be straightforward to express in terms of dynamic logic.
+
+
+
+\section{Plan}
+\subsection{Questions to be resolved for implementation}
+ The following questions must be answered before implementation can begin.
+\subsubsection{How can curiosity be usefully integrated as an intrinsic motivation?}
+While there are existing cognitive architectures with the ability to specify an arbitrary reward, they may be poorly suited for curious agents whose primary purpose is to build models, rather than to exploit models. \textcite{frank_curiosity_2014} seems to come closest to what we desire.
+\subsubsection{How should decisions be made regarding what action to take?}
+Possible options include neural networks, or an topological approach such as \cite{lakkaraju_identifying_2016}. 
+\subsubsection{What reinforcement learning algorithm should be chosen?}
+Episodic learning is a seemingly appropriate technique to employ, enabling an agent to "look back" at past episodes in order to . The specific choice depends on the technique used for deciding actions.
+\subsubsection{How can the agent move through the action space?}
+By performing experiments. Thus, actions correspond to experiments with specific control variables. 
+\subsubsection{How can the agent perform experiments?}
+Control variables for continuous data corresponds to the base topological space of a fibre bundle. The time series is the fibre at that point.
+\subsubsection{What data is to be used for testing?}
+Generated data for continuous models, such as damped oscillators, and a thrown projectile, including variations with messy terms such as drag. Alternatively, for testing a probabilistic discrete domain where a closed form solution doesn't exist, a StarCraft 2 instance, with experimental control inputs being inputs to the game \autocite{vinyals_starcraft_2017}.
+\subsubsection{How to build models?}
+The two chief candidates are \autocite{duvenaud_automatic_2014} and \autocite{schmidt_distilling_2009}. \autocite{schmidt_distilling_2009} has the advantage of being implemented as a COTS software package, free for academic use, whereas \autocite{duvenaud_automatic_2014} may allow more flexibility and not having to spend time learning the API of the software package. Of course, the techniques in \autocite{schmidt_distilling_2009} may also be reimplemented, but this may not be warranted.
+\subsubsection{When should we build new models?}
+Should building new models be part of the compressor that happens automatically, or should it be an action exposed to the reinforcement learning algorithm? 
+
+\subsection{Implementation language}
+The design will be implemented in Haskell. The two chief options were Haskell and Python. While Python has the advantage of being easy to start protoyping with, and native TensorFlow bindings, it is much more difficult to debug and refactor than Haskell. Haskell has the advantage of being a lazy functional programming language, meaning mathematically-oriented software is much easier to read and write. What cemented Haskell as the superior choice due to the author's familarity with the language and it's various frameworks.
+
+\subsection{Outline of design}
+The agent's loop is projected to look like the following:
+
+\subsubsection{Choose experiments to perform}
+This will be done by the chosen high-level control structure, trained by the chosen reinforcement learning algorithm.
+\subsubsection{Get observation}
+Execution of the chosen action. This may be, for example, simply executing the simulated gathering function with new parameters.
+\subsubsection{Create hypothesis, or model}
+This step depends on whether model creation is an explicit action, or merely extracting the model from the previous compression step.
+\subsubsection{Test hypothesis plausibility against a suitable prior}
+\subsubsection{Evaluate observed data against model}
+\subsubsection{Subtract observed data from model prediction and encode residual}
+\subsubsection{Compress data}
+\subsubsection{Store or transmit model and compressed data}
+\subsubsection{Evaluate coherence progress}
+
+\subsection{Timeline}
+Most of questions to be resolved should be answered by 1/6/2018. The implementation of the experimental functions (e.g. the damped oscillator) can begin immediately after.
+\printbibliography 
+\end{document}
