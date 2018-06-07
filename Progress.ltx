@@ -47,7 +47,8 @@
 \renewcommand{\cftsecpagefont}{\rmfamily\mdseries\upshape} % No bold!
 
 
-\title{A curious reason for autonomous space exploration: Artificial curiosity in robotic cosmonauts (Project report))}
+\title{Artificial curiosity in robotic cosmonauts \\ \large Progress report}
+
 \author{Sophie Taylor n6362575}
 \date{8/6/2018} % Activate to display a given date or no date (if empty),
          % otherwise the current date is printed 
@@ -106,6 +107,7 @@ Adaptive compression, of which our compression scheme necessarily falls under, i
 A model is said to be \emph{context sensitive} when the probability distribution for a symbol depends on surrounding symbols. For example, in English text, after a "q" appears, the next symbol is much more likely to be a "u" than a "z". An \emph{n-gram} model is when a symbol distribution depends on the $n$ symbols occuring immediately prior to it \cite{steinruecken_lossless_2014}. As we shall be focusing on physical processes, which are typically \emph{continuous}, our compression modeling must clearly be context sensitive. 
 
 \section{Probabilistic modeling}
+Given a perfectly accurate probabilistic model of some data, we can optimally compress it (to within 2 bits) via arithmetic coding to its information content \cite{steinruecken_lossless_2014}. Thus, compression research mostly focuses on improving modeling techniques. 
 \subsection{Model building}
 There are many approaches to building predictive models of data. Some of the techniques particularly relevant to our setting are Gaussian processes \autocite{duvenaud_automatic_2014} and genetic algorithms such as used in Eureqa \autocite{schmidt_distilling_2009}.
 \subsection{Probabilistic graphical models}
@@ -115,11 +117,11 @@ Induction can be described as the problem of how we can justifiably extrapolate 
 
 \section{Information theory}
 \subsection{Coding theory}
-Coding theory is the study of codes, sequences or other combinations of symbols from an alphabet which are imbued with meaning. Source coding is the study of transforming one code to another in order to reduce the amount of information needed for the representation of its contents. In the context of compression, there are two major classes of codes: Dictionary codes, which are also known as substitution codes, and arithmetic codes \cite{steinruecken_lossless_2014}. A simple example of a dictionary code for English is augmenting the Latin alphabet with a new symbol which means "the", reducing the number of symbols required from three symbols to one. Arithmetic coding, on the other hand, encodes a single codeword representing the entire message by explicitly representing the decisions required to construct it. It is typically much easier to change the modeling process when using arithmetic coding, as dictionary codes tend to be intertwined with the model. Therefore, we shall be using arithmetic coding.
+Coding theory is the study of codes, sequences or other combinations of symbols from an alphabet which are imbued with meaning. Source coding is the study of transforming one code to another in order to reduce the amount of information needed for the representation of its contents. In the context of compression, there are two major classes of codes: Dictionary codes, which are also known as substitution codes, and arithmetic codes \cite{steinruecken_lossless_2014}. A simple example of a dictionary code for English is augmenting the Latin alphabet with a new symbol which means "the", reducing the number of symbols required from three symbols to one. Arithmetic coding, on the other hand, encodes a single codeword representing the entire message by explicitly representing the decisions required to construct it. It is typically much easier to change the modeling process when using arithmetic coding, as dictionary codes tend to be intertwined with the model. Therefore, we shall be using arithmetic coding. One approach to implementing an arithmetic coder, particularly attractive in the context of using Haskell, is given by \textcite{goos_arithmetic_2003}.
 
 
 \subsection{Directed information and network information theory}
-
+Directed information theory (and, more generally, network information theory) is the study of information flow in stateful systems with feedback. Originating from work by \textcite{massey_causality_1990}, it is particularly useful for causal systems, where future symbols may depend on past symbols. It has been used to characterise protocol dialog
 
 \chapter{Experiments and investigation}
 The goal is to experiment with how curiosity can be exploited throughout all aspects of a robotic cosmonaut's design, not just its cognitive architecture. As such, we propose to first build a simple, OODA-style agent in order to experiment with various design decisions.
