@@ -113,7 +113,7 @@ There are many approaches to building predictive models of data. Some of the tec
 \subsection{Probabilistic graphical models}
 Probabilistic graphical modeling is the study of probabilistic modeling using the tools of graph theory. This can drastically simplify the resultant models, increasing both clarity and computational efficiency. \textcite{koller_probabilistic_2009} is an introductory monograph on the subject, covering varying types of models. \textcite{xiang_probabilistic_2002} studies them in the context of intelligent agents.
 \subsection{Induction}
-Induction can be described as the problem of how we can justifiably extrapolate observations in order to make predictions. \textcite{rathmanner_philosophical_2011} is an exposition on Solomonoff induction, a mathematical formalisation of Occam's Razor, and Epicurus' Multiple Explainations theory, combined with Kolmogorov complexity in order to predict the next symbol of an observed sequence.
+Induction can be described as the problem of how we can justifiably extrapolate observations in order to make predictions. \textcite{rathmanner_philosophical_2011} provide an exposition on Solomonoff induction, a mathematical formalisation of Occam's Razor, and Epicurus' Multiple Explainations theory, combined with Kolmogorov complexity in order to predict the next symbol of an observed sequence.
 
 \section{Information theory}
 \subsection{Coding theory}
@@ -124,8 +124,45 @@ Coding theory is the study of codes, sequences or other combinations of symbols 
 Directed information theory (and, more generally, network information theory) is the study of information flow in stateful systems with feedback. Originating from work by \textcite{massey_causality_1990}, it is particularly useful for causal systems, where future symbols may depend on past symbols. It has been used to characterise protocol dialog \cite{weissman_directed_2011}, filter networks \cite{derpich_entropy_2015}, some aspects of compression and hypothesis testing \cite{permuter_interpretations_2009}, and even LGQ control \cite{tanaka_lqg_2015}. \textcite{quinn_directed_2012} shows a connection with probabilistic graphical models.
 
 
-\chapter{Experiments and investigation}
-The goal is to experiment with how curiosity can be exploited throughout all aspects of a robotic cosmonaut's design, not just its cognitive architecture. As such, we propose to first build a simple, OODA-style agent in order to experiment with various design decisions.
+
+
+
+\chapter{Plan and progress}
+
+\section{Implementation language}
+The design is being implemented in Haskell. The two chief options were Haskell and Python. While Python has the advantage of being easy to start protoyping with, and native TensorFlow bindings, it is much more difficult to debug and refactor than Haskell. Haskell has the advantage of being a lazy functional programming language, meaning mathematically-oriented software is much easier to read and write. What cemented Haskell as the superior choice was our greater familarity with the language and it's various frameworks.
+
+\section{Simulated data}
+Time series data for several continuous models, such as damped oscillators and a thrown projectile, are easy to simulate. The existence of closed form solutions provide useful checks on the models created by our compressor.
+
+\section{How to build models?}
+The two chief candidates were\autocite{duvenaud_automatic_2014} and \autocite{schmidt_distilling_2009}. \autocite{schmidt_distilling_2009} has the advantage of having already being implemented as a COTS software package (Eureqa), free for academic use, whereas \autocite{duvenaud_automatic_2014} may allow more flexibility and not having to spend time learning the API of the software package. Currently, only Eureqa is planned on being used.
+
+
+
+\section{Questions remaining to answered}
+ The following questions must be answered before implementation of the relevant modules.
+\subsection{How should decisions be made regarding what action to take?}
+Possible options include neural networks, or an topological approach such as \cite{lakkaraju_identifying_2016}. 
+\subsection{What reinforcement learning algorithm should be chosen?}
+Episodic learning is a seemingly appropriate technique to employ, enabling an agent to "look back" at past episodes in order to . The specific choice depends on the technique used for deciding actions.
+\subsection{How can the agent move through the action space?}
+By performing experiments. Thus, actions correspond to experiments with specific control variables. 
+\subsection{How can the agent perform experiments?}
+Control variables for continuous data corresponds to the base topological space of a fibre bundle. The time series is the fibre at that point.
+
+\subsection{When should we build new models?}
+Should building new models be part of the compressor that happens automatically, or should it be an action exposed to the reinforcement learning algorithm? 
+
+
+\section{Outline of design}
+
+
+\subsection{Timeline}
+Most of questions to be resolved should be answered by 1/6/2018. The implementation of the experimental functions (e.g. the damped oscillator) can begin immediately after.
+
+\chapter{Experiments and future investigation}
+The overall goal is to experiment with how curiosity can be exploited throughout all aspects of a robotic cosmonaut's design, not just its cognitive architecture. 
 \subsection{Can data compressed during learning be decompressed losslessly, within reason?}
 While the main goal of a robotic scientist is to understand the world, we would like to see the data supporting its beliefs; in addition to verifying model correctness, the data may be valuable in its own right. Thus, it is desirable for the data to be transmitted to human scientists such that they can actually retreive it.
 \subsection{Can the compressed data be sent to human scientists without further processing?}
@@ -133,53 +170,13 @@ Is the data compressed by the agent in a format and size suitable for transmissi
 \subsection{Can meaningful models be extracted?}
 As the goal of science is to build models of the universe in order to deepen our understanding, we would like to be able to understand the learned models. Compared to non-trivial deep neural nets, which are notoriously opaque to human understanding, it is desirable for the agent to create sparse models in the form of some symbolic language.
 \subsection{Background knowledge versus tabula rasa}
-How much prior knowledge should be given? Giving a model may be more harmful than starting with a blank slate, as it may first have to unlearn the model. An example may be moving from a geocentric model of the solar system to a heliocentric model. Alternatively, it may make it hard to break past an abstraction, for example going from Newtonian gravity to general relativity. Of course, this depends on the capabilities of the chosen method of automatic model creation. As such, we shall investigate the performance of the agent when given basic knowledge of physics, such as Newton's laws and some constants, and compare its performance against a blank slate, and a highly unphysical model.
+How much prior knowledge should be given? Generally, the more domain-specific compression models are, the more effective they are, but the more assumptions they build on. Clearly, this is a problem when trying to discover new phenomena. Giving a model may be more harmful than starting with a blank slate, as it may first have to unlearn the model. An example may be moving from a geocentric model of the solar system to a heliocentric model. Alternatively, it may make it hard to break past an abstraction, for example going from Newtonian gravity to general relativity. Of course, this depends on the capabilities of the chosen method of automatic model creation. As such, we shall investigate the performance of the agent when given basic knowledge of physics, such as Newton's laws and some constants, and compare its performance against a blank slate, a highly unphysical model, and only very fundamental physical laws such as Noether's theorem.
+
+\subsection{How can a computer algebra system be integrated with model discovery?}
+Computer algebra systems such as Sage (\cite{sagemath}) may be of considerable use when analysing data. How could it be integrated into our compression scheme? We leave this for future research.
 
 \subsection{Can we describe our hypotheses, actions and observations in modal logic?}
-Formalising our thought history in logic may help to find better models. For example, we may be able to pose our questions to an SMT solver such as Z3 \autocite{de_moura_z3_2008}. Finding a modality to capture the notions of "interesting" and "understanding" would presumably be required. Action modalities, such as observation and hypothesis testing, are likely to be straightforward to express in terms of dynamic logic.
+Formalising our thought history in logic may help to find better models. For example, we may be able to pose our questions to an SMT solver such as Z3 \autocite{de_moura_z3_2008}. Finding a modality to capture the notions of "interesting" and "understanding" would presumably be required. Action modalities, such as observation and hypothesis testing, are likely to be straightforward to express in terms of dynamic logic. We leave this for future research.
 
-
-
-\section{Plan}
-\subsection{Questions to be resolved for implementation}
- The following questions must be answered before implementation can begin.
-\subsubsection{How can curiosity be usefully integrated as an intrinsic motivation?}
-While there are existing cognitive architectures with the ability to specify an arbitrary reward, they may be poorly suited for curious agents whose primary purpose is to build models, rather than to exploit models. \textcite{frank_curiosity_2014} seems to come closest to what we desire.
-\subsubsection{How should decisions be made regarding what action to take?}
-Possible options include neural networks, or an topological approach such as \cite{lakkaraju_identifying_2016}. 
-\subsubsection{What reinforcement learning algorithm should be chosen?}
-Episodic learning is a seemingly appropriate technique to employ, enabling an agent to "look back" at past episodes in order to . The specific choice depends on the technique used for deciding actions.
-\subsubsection{How can the agent move through the action space?}
-By performing experiments. Thus, actions correspond to experiments with specific control variables. 
-\subsubsection{How can the agent perform experiments?}
-Control variables for continuous data corresponds to the base topological space of a fibre bundle. The time series is the fibre at that point.
-\subsubsection{What data is to be used for testing?}
-Generated data for continuous models, such as damped oscillators, and a thrown projectile, including variations with messy terms such as drag. Alternatively, for testing a probabilistic discrete domain where a closed form solution doesn't exist, a StarCraft 2 instance, with experimental control inputs being inputs to the game \autocite{vinyals_starcraft_2017}.
-\subsubsection{How to build models?}
-The two chief candidates are \autocite{duvenaud_automatic_2014} and \autocite{schmidt_distilling_2009}. \autocite{schmidt_distilling_2009} has the advantage of being implemented as a COTS software package, free for academic use, whereas \autocite{duvenaud_automatic_2014} may allow more flexibility and not having to spend time learning the API of the software package. Of course, the techniques in \autocite{schmidt_distilling_2009} may also be reimplemented, but this may not be warranted.
-\subsubsection{When should we build new models?}
-Should building new models be part of the compressor that happens automatically, or should it be an action exposed to the reinforcement learning algorithm? 
-
-\subsection{Implementation language}
-The design will be implemented in Haskell. The two chief options were Haskell and Python. While Python has the advantage of being easy to start protoyping with, and native TensorFlow bindings, it is much more difficult to debug and refactor than Haskell. Haskell has the advantage of being a lazy functional programming language, meaning mathematically-oriented software is much easier to read and write. What cemented Haskell as the superior choice due to the author's familarity with the language and it's various frameworks.
-
-\subsection{Outline of design}
-The agent's loop is projected to look like the following:
-
-\subsubsection{Choose experiments to perform}
-This will be done by the chosen high-level control structure, trained by the chosen reinforcement learning algorithm.
-\subsubsection{Get observation}
-Execution of the chosen action. This may be, for example, simply executing the simulated gathering function with new parameters.
-\subsubsection{Create hypothesis, or model}
-This step depends on whether model creation is an explicit action, or merely extracting the model from the previous compression step.
-\subsubsection{Test hypothesis plausibility against a suitable prior}
-\subsubsection{Evaluate observed data against model}
-\subsubsection{Subtract observed data from model prediction and encode residual}
-\subsubsection{Compress data}
-\subsubsection{Store or transmit model and compressed data}
-\subsubsection{Evaluate coherence progress}
-
-\subsection{Timeline}
-Most of questions to be resolved should be answered by 1/6/2018. The implementation of the experimental functions (e.g. the damped oscillator) can begin immediately after.
 \printbibliography 
 \end{document}
