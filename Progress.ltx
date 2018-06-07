@@ -77,10 +77,7 @@ This provides a large number of interesting research questions in a several diff
 
 Alternatively, questions relating to compression itself: How can we design our compression schemes to maximise their effectiveness in the context of artificial curiosity? Are the resulting models and compressed data in a suitable format for transmitting to human scientists, without additional processing? Most extant compression schemes don't actively ask for additional data (meaning, in our case, perform more experiments) to improve its models. Further, most of the models are nonphysical (e.g. acausal, n-gram based, and so on). As such, we are investigating pro-active, physically-based compression schemes for use in autonomous agents.
 
-\section{Plan}
-Our high-level plan is the following. We are creating libraries and a test application in Haskell which simulates experimental data with a damped oscillator plus noise, and passes it on to physically-based regression applications. Then, we'll take the resulting models, arithmetically code the data, and, if compression is poor, prompt for additional data. We measure our increasingly complex models in terms of coherence progress. 
 
-The next step of the plan is determining the effects of our approach. We shall broaden the types of available simulated data (for example, a projectile) and attempt to train an autonomous agent via reinforcement learning with coherence progress as a reward metric. The methodology by which the agent performs experiments to input new data is the behaviour being trained, whether by studying new classes of data, or by changing experimental control variables.
 
 
 \chapter{Literature review}
@@ -129,6 +126,13 @@ Directed information theory (and, more generally, network information theory) is
 
 \chapter{Plan and progress}
 
+\section{Plan}
+Our high-level plan is the following. We are creating libraries and a test application in Haskell which simulates experimental data with a damped oscillator plus noise, and passes it on to physically-based regression applications. Then, using the resulting models, arithmetically code the data, and, if compression is poor, prompt for additional data. We measure our increasingly complex models in terms of coherence progress. 
+
+The next step of the plan is determining the effects of our approach. We shall broaden the types of available simulated data (for example, a projectile) and attempt to train an autonomous agent via reinforcement learning with coherence progress as a reward metric. The methodology by which the agent performs experiments to input new data is the behaviour being trained, whether by studying new classes of data, or by changing experimental control variables.
+
+Initially, the project was more concerned with the architecture of the agent used to analyse the benefits our compression scheme. The focus has since shifted to the compressor itself, reducing scope and deferring decisions on the design of the agent until the second phase of implementation and testing.
+
 \section{Implementation language}
 The design is being implemented in Haskell. The two chief options were Haskell and Python. While Python has the advantage of being easy to start protoyping with, and native TensorFlow bindings, it is much more difficult to debug and refactor than Haskell. Haskell has the advantage of being a lazy functional programming language, meaning mathematically-oriented software is much easier to read and write. What cemented Haskell as the superior choice was our greater familarity with the language and it's various frameworks.
 
@@ -136,16 +140,16 @@ The design is being implemented in Haskell. The two chief options were Haskell a
 Time series data for several continuous models, such as damped oscillators and a thrown projectile, are easy to simulate. The existence of closed form solutions provide useful checks on the models created by our compressor.
 
 \section{How to build models?}
-The two chief candidates were\autocite{duvenaud_automatic_2014} and \autocite{schmidt_distilling_2009}. \autocite{schmidt_distilling_2009} has the advantage of having already being implemented as a COTS software package (Eureqa), free for academic use, whereas \autocite{duvenaud_automatic_2014} may allow more flexibility and not having to spend time learning the API of the software package. Currently, only Eureqa is planned on being used.
+The two chief candidates were \autocite{duvenaud_automatic_2014} and \autocite{schmidt_distilling_2009}. \autocite{schmidt_distilling_2009} has the advantage of having already being implemented as a COTS software package (Eureqa), free for academic use, whereas \autocite{duvenaud_automatic_2014} may allow more flexibility and not having to spend time learning the API of the software package. Currently, only Eureqa is planned on being used.
 
 
 
-\section{Questions remaining to answered}
+\section{Questions remaining about the test agent}
  The following questions must be answered before implementation of the relevant modules.
 \subsection{How should decisions be made regarding what action to take?}
 Possible options include neural networks, or an topological approach such as \cite{lakkaraju_identifying_2016}. 
 \subsection{What reinforcement learning algorithm should be chosen?}
-Episodic learning is a seemingly appropriate technique to employ, enabling an agent to "look back" at past episodes in order to . The specific choice depends on the technique used for deciding actions.
+Episodic learning is a seemingly appropriate technique to employ, enabling an agent to "look back" at past episodes in order to "strengthen their reflexes". The specific choice depends on the technique used for deciding actions.
 \subsection{How can the agent move through the action space?}
 By performing experiments. Thus, actions correspond to experiments with specific control variables. 
 \subsection{How can the agent perform experiments?}
@@ -155,11 +159,8 @@ Control variables for continuous data corresponds to the base topological space 
 Should building new models be part of the compressor that happens automatically, or should it be an action exposed to the reinforcement learning algorithm? 
 
 
-\section{Outline of design}
-
-
-\subsection{Timeline}
-Most of questions to be resolved should be answered by 1/6/2018. The implementation of the experimental functions (e.g. the damped oscillator) can begin immediately after.
+\section{Outline of compressor}
+Based on a computational effects framework \cite{kiselyov_freer_},
 
 \chapter{Experiments and future investigation}
 The overall goal is to experiment with how curiosity can be exploited throughout all aspects of a robotic cosmonaut's design, not just its cognitive architecture. 
