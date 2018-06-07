@@ -83,8 +83,16 @@ The next step of the plan is determining the effects of our approach. We shall b
 
 
 \chapter{Literature review}
-\section{Compression}
 
+\section{Reinforcement learning}
+Reinforcement learning algorithms are training algorithms, designed to maximise the expected reward from a (possibly continuous) sequence of actions of an agent in some environment. One notable class of reinforcement learning algorithms are episodic in nature, exemplified in \autocite{blundell_model-free_2016,pritzel_neural_2017}.Typically, rewards are extrinsic, such as some fitness measure. Intrinsic rewards, on the other hand, can be considered as \emph{motivations}. One such motivation is curiosity. Extrinsic and intrinsic rewards can generally be combined arbitrarily.
+
+
+\section{Artificial curiosity}
+The notion of "interestingness" has only recently been formalised in a satisfactory manner. Compression progress, as outlined by \textcite{pezzulo_driven_2009}, is an information-theoretic approach in which the reward is a function of the differential progress some compression algorithm makes in adapting to its (generally streaming) input. \textcite{graziano_artificial_2011} expound on this in the context of space science.
+
+
+\section{Compression}
 \subsection{Lossless compression}
 Compression comes in two flavours: Lossy compression, where we allow errors in the reconstructed data to achieve greater compression ratios, and lossless compression, where we don't. Lossy compression is typically used for audio and visual data, primarily for entertainment purposes. We shall ignore lossy compression, and focus solely on lossless compression. 
 
@@ -97,24 +105,17 @@ Adaptive compression, of which our compression scheme necessarily falls under, i
 \subsection{Context sensitive compression}
 A model is said to be \emph{context sensitive} when the probability distribution for a symbol depends on surrounding symbols. For example, in English text, after a "q" appears, the next symbol is much more likely to be a "u" than a "z". An \emph{n-gram} model is when a symbol distribution depends on the $n$ symbols occuring immediately prior to it \cite{steinruecken_lossless_2014}. As we shall be focusing on physical processes, which are typically \emph{continuous}, our compression modeling must clearly be context sensitive. 
 
-\section{Reinforcement learning}
-Reinforcement learning algorithms are training algorithms, designed to maximise the expected reward from a (possibly continuous) sequence of actions of an agent in some environment. One notable class of reinforcement learning algorithms are episodic in nature, exemplified in \autocite{blundell_model-free_2016,pritzel_neural_2017}.Typically, rewards are external, such as some fitness measure. Internal rewards, on the other hand, can be considered as \emph{motivations}. One such motivation is curiosity.
-\section{Artificial curiosity}
-\textcite{hutchison_coherence_2011} introduces the concept of \emph{compression coherence}, as a proposed measure for curiosity. It evaluates sequential observations in terms of how adding new data increases the compression ratio, signifying an increase in model accuracy, or understanding. \textcite{graziano_artificial_2011} builds on and generalises this to arbitrary adaptive compressors, motivated by an autonomous space science robot.
+\section{Probabilistic modeling}
+\subsection{Model building}
+There are many approaches to building predictive models of data. Some of the techniques particularly relevant to our setting are Gaussian processes \autocite{duvenaud_automatic_2014} and genetic algorithms such as used in Eureqa \autocite{schmidt_distilling_2009}.
+\subsection{Probabilistic graphical models}
+Probabilistic graphical modeling is the study of probabilistic modeling using the tools of graph theory. This can drastically simplify the resultant models, increasing both clarity and computational efficiency. \textcite{koller_probabilistic_2009} is an introductory monograph on the subject, covering varying types of models. \textcite{xiang_probabilistic_2002} studies them in the context of intelligent agents.
+\subsection{Induction}
+Induction can be described as the problem of how we can justifiably extrapolate observations in order to make predictions. \textcite{rathmanner_philosophical_2011} is an exposition on Solomonoff induction, a mathematical formalisation of Occam's Razor, and Epicurus' Multiple Explainations theory, combined with Kolmogorov complexity in order to predict the next symbol of an observed sequence.
 
 \section{Information theory}
 \subsection{Coding}
-\section{Induction}
-Induction can be described as the problem of how we can justifiably extrapolate observations in order to make predictions. \textcite{rathmanner_philosophical_2011} is an exposition on Solomonoff induction, a mathematical formalisation of Occam's Razor, and Epicurus' Multiple Explainations theory, combined with Kolmogorov complexity in order to predict the next symbol of an observed sequence.
-\section{Model building}
-There are many approaches to building predictive models of data. Some of the techniques particularly relevant to our setting are Gaussian processes \autocite{duvenaud_automatic_2014} and genetic algorithms such as used in Eureqa \autocite{schmidt_distilling_2009}.
-\subsection{Probabilistic graphical models}
-\section{Autonomous agents}
-\section{Cognitive architecture}
-\textcite{frank_curiosity_2014} describes an architecture for a robotic humanoid, designed for low-latency motion planning and control of a large number of continuous actuators with a high degree of freedom.
-
-\section{Modal logic}
-Modal logics are logical systems with more operators than standard classical (or intuinistic) logic. Some examples are doxastic logic, a logic of belief; epistemic logic, a logic of knowledge; and dynamic logic, a logic of actions \autocite{harel_dynamic_2000}. 
+\subsection{Directed information and network information theory}
 
 
 \chapter{Experiments and investigation}
