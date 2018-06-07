@@ -114,7 +114,10 @@ Probabilistic graphical modeling is the study of probabilistic modeling using th
 Induction can be described as the problem of how we can justifiably extrapolate observations in order to make predictions. \textcite{rathmanner_philosophical_2011} is an exposition on Solomonoff induction, a mathematical formalisation of Occam's Razor, and Epicurus' Multiple Explainations theory, combined with Kolmogorov complexity in order to predict the next symbol of an observed sequence.
 
 \section{Information theory}
-\subsection{Coding}
+\subsection{Coding theory}
+Coding theory is the study of codes, sequences or other combinations of symbols from an alphabet which are imbued with meaning. Source coding is the study of transforming one code to another in order to reduce the amount of information needed for the representation of its contents. In the context of compression, there are two major classes of codes: Dictionary codes, which are also known as substitution codes, and arithmetic codes \cite{steinruecken_lossless_2014}. A simple example of a dictionary code for English is augmenting the Latin alphabet with a new symbol which means "the", reducing the number of symbols required from three symbols to one. Arithmetic coding, on the other hand, encodes a single codeword representing the entire message by explicitly representing the decisions required to construct it. It is typically much easier to change the modeling process when using arithmetic coding, as dictionary codes tend to be intertwined with the model. Therefore, we shall be using arithmetic coding.
+
+
 \subsection{Directed information and network information theory}
 
 
