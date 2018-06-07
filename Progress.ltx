@@ -84,13 +84,26 @@ The next step of the plan is determining the effects of our approach. We shall b
 
 \chapter{Literature review}
 \section{Compression}
-\textcite{steinruecken_lossless_2014} is a mathematically rigorous approach to the fundamentals of lossless data compression, for compressing objects such as sequences, sets, and multisets. \textcite{steinruecken_compressing_2016} expands on compressing other combinitorial objects. \textcite{mahoney_adaptive_2005} introduces using adaptive weighting of compression models via primitive neural networks.
+
+\subsection{Lossless compression}
+Compression comes in two flavours: Lossy compression, where we allow errors in the reconstructed data to achieve greater compression ratios, and lossless compression, where we don't. Lossy compression is typically used for audio and visual data, primarily for entertainment purposes. We shall ignore lossy compression, and focus solely on lossless compression. 
+
+For decades, lossless compression research was mostly ad~hoc and focused on heuristics and intuition which combined both modeling and coding, such as the landmark development of the LZ77 by \textcite{ziv_universal_1977}. \textcite{steinruecken_lossless_2014} provided a rigorous approach to the fundamentals of lossless data compression from first principles, for compressing basic mathematical objects such as sequences, sets, and multisets. \textcite{steinruecken_compressing_2016} then expanded on compressing other combinitorial objects. 
+
+\subsection{Adaptive compression}
+Adaptive compression, of which our compression scheme necessarily falls under, is when the probability model of the data to be compressed isn't known in advance, and must be learned during the compression process itself \cite{steinruecken_lossless_2014}. A simple example is progressively learning a histogram of the data, and assigning the probability of a symbol being the frequency in which it has appeared so far, also called a 0-gram model \cite{steinruecken_lossless_2014}.
+\textcite{mahoney_adaptive_2005} introduces using adaptive weighting of compression models via primitive neural networks.
+
+\subsection{Context sensitive compression}
+A model is said to be \emph{context sensitive} when the probability distribution for a symbol depends on surrounding symbols. For example, in English text, after a "q" appears, the next symbol is much more likely to be a "u" than a "z". An \emph{n-gram} model is when a symbol distribution depends on the $n$ symbols occuring immediately prior to it \cite{steinruecken_lossless_2014}. As we shall be focusing on physical processes, which are typically \emph{continuous}, our compression modeling must clearly be context sensitive. 
+
 \section{Reinforcement learning}
 Reinforcement learning algorithms are training algorithms, designed to maximise the expected reward from a (possibly continuous) sequence of actions of an agent in some environment. One notable class of reinforcement learning algorithms are episodic in nature, exemplified in \autocite{blundell_model-free_2016,pritzel_neural_2017}.Typically, rewards are external, such as some fitness measure. Internal rewards, on the other hand, can be considered as \emph{motivations}. One such motivation is curiosity.
 \section{Artificial curiosity}
 \textcite{hutchison_coherence_2011} introduces the concept of \emph{compression coherence}, as a proposed measure for curiosity. It evaluates sequential observations in terms of how adding new data increases the compression ratio, signifying an increase in model accuracy, or understanding. \textcite{graziano_artificial_2011} builds on and generalises this to arbitrary adaptive compressors, motivated by an autonomous space science robot.
 
 \section{Information theory}
+\subsection{Coding}
 \section{Induction}
 Induction can be described as the problem of how we can justifiably extrapolate observations in order to make predictions. \textcite{rathmanner_philosophical_2011} is an exposition on Solomonoff induction, a mathematical formalisation of Occam's Razor, and Epicurus' Multiple Explainations theory, combined with Kolmogorov complexity in order to predict the next symbol of an observed sequence.
 \section{Model building}
