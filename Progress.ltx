@@ -62,9 +62,9 @@ We discuss the notion of a cognitive architecture for an autonomous space explor
 \chapter{Introduction}
 Space exploration is hard. One of the reasons for this is the distance. Despite the speed of light being incredibly fast to us, the universe is very big. The radio propagation time between Earth and a rover on Mars, for example, can be anywhere between 4 minutes and 24 minutes, depending on the time of (each planet's) year. The distance also means enormous free space path loss --- For example, an S band transmission experiences between 257 and 274 dB of loss. This greatly reduces the Shannon capacity of the communication channel, reducing the amount of science data which can be returned.
 
-Autonomy is crucial in overcoming these barriers. Autonomous control reduces the need for detailed command constructions; we can create relatively high level, autonomous GNC controllers which we issue high-level instructions such as "Go to that interesting rock", and it can be expected to avoid getting stuck in a crater enroute without any human interaction. To reduce the amount of uplink bandwidth required, we can also preprocess the collected data, such as creating and transmitting only a histogram of the data, rather than the individual datapoints; we can also compress it. Combining these two functions is the goal this project is working towards.
+Autonomy is crucial in overcoming these barriers. Autonomous control reduces the need for detailed command constructions; we can create relatively high level, autonomous GNC controllers which we issue high-level instructions such as ``Go to that interesting rock", and it can be expected to avoid getting stuck in a crater enroute without any human interaction. To reduce the amount of uplink bandwidth required, we can also preprocess the collected data, such as creating and transmitting only a histogram of the data, rather than the individual datapoints; we can also compress it. Combining these two functions is the goal this project is working towards.
 
-It is desirable to make our robotic cosmonauts as autonomous as possible, so ideally we could just instruct them to "go do some science and report any interesting discoveries". But how can we mathematically model "Go do some science", or, for that matter, "interesting discovery"?
+It is desirable to make our robotic cosmonauts as autonomous as possible, so ideally we could just instruct them to ``go do some science and report any interesting discoveries". But how can we mathematically model ``Go do some science", or, for that matter, ``interesting discovery"?
 There are two main, complimentary approaches to the creation of autonomous systems: Control theory, which is suited to low-level systems when both the plant and desired behaviour are relatively easy to mathematically model, and the desired behaviour is not vastly more abstract than the plant; and so-called artificial intelligence, which is suitable when we find great difficulty in modeling the plant, but can still describe the desired behaviour, which may be extremely high level.
 
 \section{Artificial curiosity}
@@ -114,7 +114,7 @@ Induction can be described as the problem of how we can justifiably extrapolate 
 
 \section{Information theory}
 \subsection{Coding theory}
-Coding theory is the study of codes, sequences or other combinations of symbols from an alphabet which are imbued with meaning. Source coding is the study of transforming one code to another in order to reduce the amount of information needed for the representation of its contents. In the context of compression, there are two major classes of codes: Dictionary codes, which are also known as substitution codes, and arithmetic codes \cite{steinruecken_lossless_2014}. A simple example of a dictionary code for English is augmenting the Latin alphabet with a new symbol which means "the", reducing the number of symbols required from three symbols to one. Arithmetic coding, on the other hand, encodes a single codeword representing the entire message by explicitly representing the decisions required to construct it. It is typically much easier to change the modeling process when using arithmetic coding, as dictionary codes tend to be intertwined with the model. Therefore, we shall be using arithmetic coding. One approach to implementing an arithmetic coder, particularly attractive in the context of using Haskell, is given by \textcite{goos_arithmetic_2003}.
+Coding theory is the study of codes, sequences or other combinations of symbols from an alphabet which are imbued with meaning. Source coding is the study of transforming one code to another in order to reduce the amount of information needed for the representation of its contents. In the context of compression, there are two major classes of codes: Dictionary codes, which are also known as substitution codes, and arithmetic codes \cite{steinruecken_lossless_2014}. A simple example of a dictionary code for English is augmenting the Latin alphabet with a new symbol which means "the", reducing the number of symbols required from three symbols to one. Arithmetic coding, on the other hand, encodes a single codeword representing the entire message by explicitly representing the decisions required to construct it. It is typically much easier to change the modeling process when using arithmetic coding, as dictionary codes tend to be intertwined with the model. Therefore, we shall be using arithmetic coding. One approach to implementing an arithmetic coder, particularly attractive in the context of using Haskell, is given by \textcite{goos_arithmetic_2003}. \textcite{steinruecken_lossless_2014} also provides an interesting implementation.
 
 
 \subsection{Directed information and network information theory}
@@ -140,27 +140,27 @@ The design is being implemented in Haskell. The two chief options were Haskell a
 Time series data for several continuous models, such as damped oscillators and a thrown projectile, are easy to simulate. The existence of closed form solutions provide useful checks on the models created by our compressor.
 
 \section{How to build models?}
-The two chief candidates were \autocite{duvenaud_automatic_2014} and \autocite{schmidt_distilling_2009}. \autocite{schmidt_distilling_2009} has the advantage of having already being implemented as a COTS software package (Eureqa), free for academic use, whereas \autocite{duvenaud_automatic_2014} may allow more flexibility and not having to spend time learning the API of the software package. Currently, only Eureqa is planned on being used.
+The initial prototype is merely choosing between several hardcoded models. Once the overall framework is complete, this will be removed in favour of actually analysing the data. The two chief candidates were \autocite{duvenaud_automatic_2014} and \autocite{schmidt_distilling_2009}. \autocite{schmidt_distilling_2009} has the advantage of having already being implemented as a COTS software package (Eureqa), free for academic use, whereas \autocite{duvenaud_automatic_2014} may allow more flexibility and not having to spend time learning the API of the software package. Currently, only Eureqa is planned on being used.
 
+
+\section{Outline of compressor}
+The overall design is based on a computational effects framework \cite{kiselyov_freer_} in order to minimise the interaction between logically separate; for example, the random number generator doesn't need to worry about I/O. Computational effects are rather suited to a pipeline style of processing.
 
 
 \section{Questions remaining about the test agent}
- The following questions must be answered before implementation of the relevant modules.
+The following questions must be answered before implementation of the relevant modules.
 \subsection{How should decisions be made regarding what action to take?}
-Possible options include neural networks, or an topological approach such as \cite{lakkaraju_identifying_2016}. 
+Possible options include neural networks, or a topological approach such as outlined by \textcite{lakkaraju_identifying_2016}. 
 \subsection{What reinforcement learning algorithm should be chosen?}
 Episodic learning is a seemingly appropriate technique to employ, enabling an agent to "look back" at past episodes in order to "strengthen their reflexes". The specific choice depends on the technique used for deciding actions.
 \subsection{How can the agent move through the action space?}
-By performing experiments. Thus, actions correspond to experiments with specific control variables. 
+The primary action of the agent is to perform experiments. Thus, actions correspond to experiments with specific control variables. 
 \subsection{How can the agent perform experiments?}
 Control variables for continuous data corresponds to the base topological space of a fibre bundle. The time series is the fibre at that point.
 
 \subsection{When should we build new models?}
 Should building new models be part of the compressor that happens automatically, or should it be an action exposed to the reinforcement learning algorithm? 
 
-
-\section{Outline of compressor}
-Based on a computational effects framework \cite{kiselyov_freer_},
 
 \chapter{Experiments and future investigation}
 The overall goal is to experiment with how curiosity can be exploited throughout all aspects of a robotic cosmonaut's design, not just its cognitive architecture. 
@@ -171,7 +171,7 @@ Is the data compressed by the agent in a format and size suitable for transmissi
 \subsection{Can meaningful models be extracted?}
 As the goal of science is to build models of the universe in order to deepen our understanding, we would like to be able to understand the learned models. Compared to non-trivial deep neural nets, which are notoriously opaque to human understanding, it is desirable for the agent to create sparse models in the form of some symbolic language.
 \subsection{Background knowledge versus tabula rasa}
-How much prior knowledge should be given? Generally, the more domain-specific compression models are, the more effective they are, but the more assumptions they build on. Clearly, this is a problem when trying to discover new phenomena. Giving a model may be more harmful than starting with a blank slate, as it may first have to unlearn the model. An example may be moving from a geocentric model of the solar system to a heliocentric model. Alternatively, it may make it hard to break past an abstraction, for example going from Newtonian gravity to general relativity. Of course, this depends on the capabilities of the chosen method of automatic model creation. As such, we shall investigate the performance of the agent when given basic knowledge of physics, such as Newton's laws and some constants, and compare its performance against a blank slate, a highly unphysical model, and only very fundamental physical laws such as Noether's theorem.
+How much prior knowledge should be given? Generally, the more domain-specific compression models are, the more effective they are, but the more assumptions they build on. Clearly, this is a problem when trying to discover new phenomena. Providing an initial model may be more harmful than starting with a blank slate, as it may first have to unlearn the model. An example may be moving from a geocentric model of the solar system to a heliocentric model. Alternatively, it may make it hard to break past an abstraction, for example going from Newtonian gravity to general relativity. Of course, this depends on the capabilities of the chosen method of automatic model creation. As such, we shall investigate the performance of the agent when given basic knowledge of physics, such as Newton's laws and some constants, and compare its performance against a blank slate, a highly unphysical model, and only very fundamental physical laws such as Noether's theorem.
 
 \subsection{How can a computer algebra system be integrated with model discovery?}
 Computer algebra systems such as Sage (\cite{sagemath}) may be of considerable use when analysing data. How could it be integrated into our compression scheme? We leave this for future research.
