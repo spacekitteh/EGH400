@@ -2,7 +2,7 @@
 % !TEX encoding = UTF-8 Unicode
 
 
-\documentclass[11pt,draft]{report} 
+\documentclass[11pt]{report} 
 \usepackage[utf8]{inputenc} % set input encoding (not needed with XeLaTeX)
 
 
@@ -12,6 +12,8 @@
 
 
 \usepackage{graphicx} % support the \includegraphics command and options
+
+\usepackage{fancyref}
 
 % \usepackage[parfill]{parskip} % Activate to begin paragraphs with an empty line rather than an indent
 
@@ -132,20 +134,29 @@ Our high-level plan is the following. We are creating libraries and a test appli
 The next step of the plan is determining the effects of our approach. We shall broaden the types of available simulated data (for example, a projectile) and attempt to train an autonomous agent via reinforcement learning with coherence progress as a reward metric. The methodology by which the agent performs experiments to input new data is the behaviour being trained, whether by studying new classes of data, or by changing experimental control variables.
 
 Initially, the project was more concerned with the architecture of the agent used to analyse the benefits of our compression scheme. The focus has since shifted to the compressor itself, reducing scope and deferring decisions on the design of the agent until the second phase of implementation and testing.
-
-\section{Implementation language}
+\section{Initial design decisions}
+\subsection{Implementation language}
 The design is being implemented in Haskell. The two chief options were Haskell and Python. While Python has the advantage of being easy to start protoyping with, and native TensorFlow bindings, it is much more difficult to debug and refactor than Haskell. Haskell has the advantage of being a lazy functional programming language, meaning mathematically-oriented software is much easier to read and write. What cemented Haskell as the superior choice was our greater familarity with the language and it's various frameworks.
 
-\section{Simulated data}
+\subsection{Simulated data}
 Time series data for several continuous models, such as damped oscillators and a thrown projectile, are easy to simulate. The existence of closed form solutions provide useful checks on the models created by our compressor.
 
-\section{How to build models?}
+\subsection{How to build models?}
 The initial prototype is merely choosing between several hardcoded models. Once the overall framework is complete, this will be removed in favour of actually analysing the data. The two chief candidates were \autocite{duvenaud_automatic_2014} and \autocite{schmidt_distilling_2009}. \autocite{schmidt_distilling_2009} has the advantage of having already being implemented as a COTS software package (Eureqa), free for academic use, whereas \autocite{duvenaud_automatic_2014} may allow more flexibility and not having to spend time learning the API of the software package. Currently, only Eureqa is planned on being used.
 
 
 \section{Outline of compressor}
 The overall design is based on a computational effects framework \cite{kiselyov_freer_} in order to minimise the interaction between logically separate; for example, the random number generator doesn't need to worry about I/O. Computational effects are rather suited to a pipeline style of processing.
+An overview of the data flow is shown in \fref{fig:CompressorOverview}.
+\subsection{Components}
+\subsubsection{
+\subsection{Current problems}
 
+\begin{figure}
+\centering\includegraphics{CompressorV1Overview.png}
+\caption{Overview of prototype compressor}
+\label{fig:CompressorOverview}
+\end{figure}
 
 \section{Questions remaining about the test agent}
 The following questions must be answered before implementation of the relevant modules.
@@ -164,19 +175,19 @@ Should building new models be part of the compressor that happens automatically,
 
 \chapter{Experiments and future investigation}
 The overall goal is to experiment with how curiosity can be exploited throughout all aspects of a robotic cosmonaut's design, not just its cognitive architecture. 
-\subsection{Can data compressed during learning be decompressed losslessly, within reason?}
+\section{Can data compressed during learning be decompressed losslessly, within reason?}
 While the main goal of a robotic scientist is to understand the world, we would like to see the data supporting its beliefs; in addition to verifying model correctness, the data may be valuable in its own right. Thus, it is desirable for the data to be transmitted to human scientists such that they can actually retreive it.
-\subsection{Can the compressed data be sent to human scientists without further processing?}
+\section{Can the compressed data be sent to human scientists without further processing?}
 Is the data compressed by the agent in a format and size suitable for transmission and use by human scientists, or must it be further compressed? This serves as a sanity check on the capability of the agent to produce a meaningful model, as the better the model is at predicting the data, the better the compression.
-\subsection{Can meaningful models be extracted?}
+\section{Can meaningful models be extracted?}
 As the goal of science is to build models of the universe in order to deepen our understanding, we would like to be able to understand the learned models. Compared to non-trivial deep neural nets, which are notoriously opaque to human understanding, it is desirable for the agent to create sparse models in the form of some symbolic language.
-\subsection{Background knowledge versus tabula rasa}
+\section{Background knowledge versus tabula rasa}
 How much prior knowledge should be given? Generally, the more domain-specific compression models are, the more effective they are, but the more assumptions they build on. Clearly, this is a problem when trying to discover new phenomena. Providing an initial model may be more harmful than starting with a blank slate, as it may first have to unlearn the model. An example may be moving from a geocentric model of the solar system to a heliocentric model. Alternatively, it may make it hard to break past an abstraction, for example going from Newtonian gravity to general relativity. Of course, this depends on the capabilities of the chosen method of automatic model creation. As such, we shall investigate the performance of the agent when given basic knowledge of physics, such as Newton's laws and some constants, and compare its performance against a blank slate, a highly unphysical model, and only very fundamental physical laws such as Noether's theorem.
 
-\subsection{How can a computer algebra system be integrated with model discovery?}
+\section{How can a computer algebra system be integrated with model discovery?}
 Computer algebra systems such as Sage (\cite{sagemath}) may be of considerable use when analysing data. How could it be integrated into our compression scheme? We leave this for future research.
 
-\subsection{Can we describe our hypotheses, actions and observations in modal logic?}
+\section{Can we describe our hypotheses, actions and observations in modal logic?}
 Formalising our thought history in logic may help to find better models. For example, we may be able to pose our questions to an SMT solver such as Z3 \autocite{de_moura_z3_2008}. Finding a modality to capture the notions of "interesting" and "understanding" would presumably be required. Action modalities, such as observation and hypothesis testing, are likely to be straightforward to express in terms of dynamic logic. We leave this for future research.
 
 \printbibliography 
