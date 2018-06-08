@@ -186,7 +186,7 @@ Episodic learning is a seemingly appropriate technique to employ, enabling an ag
 The primary action available to the agent is to perform experiments. Thus, specific actions correspond to experiments with specific control variables. Moving through a continuous space of actions, such as by a gradient descent algorithm, is fairly straightforward. However, if the action space is a hybrid of discrete and continuous actions, then this becomes much more difficult.
 
 \subsection{When should we build new models?}
-Should building new models be part of the compressor that happens automatically, or should it be a deliberate action exposed to the reinforcement learning algorithm? In the prototype, it 
+Should building new models be part of the compressor that happens automatically, or should it be a deliberate action exposed to the reinforcement learning algorithm? In the prototype, it happens each time data is added, but this clearly is not efficient. Some possibilities are adding data in batches and only generating a model after each batch; asking each time data is added if a new model should be generated; or exposing a hook to the model generation process along with the existing model, and passing these to an external function which implements its own logic on when (and how) to generate new models. This last option is the most flexible.
 
 
 \chapter{Experiments and future investigation}
