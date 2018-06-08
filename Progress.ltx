@@ -148,6 +148,8 @@ Time series data for several continuous models, such as damped oscillators and a
 \subsection{How to build models?}
 The initial prototype is merely choosing between several hardcoded models. Once the overall framework is complete, this will be removed in favour of actually analysing the data. The two chief candidates were \autocite{duvenaud_automatic_2014} and \autocite{schmidt_distilling_2009}. \autocite{schmidt_distilling_2009} has the advantage of having already being implemented as a commercial, off-the-shelf software package (Eureqa), free for academic use, whereas \autocite{duvenaud_automatic_2014} may allow more flexibility and not having to spend time learning the API of the software package. Currently, only Eureqa is planned on being used.
 
+\subsection{How can we represent the collected data?}
+We shall view the datastore geometrically \cite{the_univalent_foundations_program_homotopy_2013}. Control variables and other side information correspond to the base topological space of a Cartesian fibre bundle. The time series is the fibre at that point. We can represent this as a multi-valued function, with the base space acting as an address into the store \cite{mazel-gee_users_2015}.
 
 \section{Outline of compressor}
 \begin{figure}
@@ -177,13 +179,11 @@ Another problem lies in finding a satisfactory representation of the coding alph
 \section{Questions remaining about the test agent}
 The following questions must be answered before implementation of the relevant modules.
 \subsection{How should decisions be made regarding what action to take?}
-Possible options include neural networks, or a topological approach such as outlined by \textcite{lakkaraju_identifying_2016}. A weighted combination of the two after their evaluation, or exposure of the topological approach as input to the neural network, may be best.
+Possible options include neural networks, or a topological approach such as outlined by \textcite{lakkaraju_identifying_2016}. A weighted combination of the two after their evaluation, or  perhaps exposure of the topological approach as input to the neural network may be a good solution.
 \subsection{What reinforcement learning algorithm should be chosen?}
 Episodic learning is a seemingly appropriate technique to employ, enabling an agent to ``look back" at past episodes in order to ``strengthen their reflexes". The specific choice depends on the technique used for deciding actions.
 \subsection{How can the agent move through the action space?}
 The primary action available to the agent is to perform experiments. Thus, specific actions correspond to experiments with specific control variables. Moving through a continuous space of actions, such as by a gradient descent algorithm, is fairly straightforward. However, if the action space is a hybrid of discrete and continuous actions, then this becomes much more difficult.
-\subsection{How can the agent perform experiments?}
-Control variables for continuous data corresponds to the base topological space of a fibre bundle. The time series is the fibre at that point.
 
 \subsection{When should we build new models?}
 Should building new models be part of the compressor that happens automatically, or should it be a deliberate action exposed to the reinforcement learning algorithm? In the prototype, it 
