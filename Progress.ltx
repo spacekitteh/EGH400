@@ -146,19 +146,25 @@ The initial prototype is merely choosing between several hardcoded models. Once 
 
 
 \section{Outline of compressor}
-The overall design is based on a computational effects framework \cite{kiselyov_freer_} in order to minimise the interaction between logically separate; for example, the random number generator doesn't need to worry about I/O. Computational effects are rather suited to a pipeline style of processing.
-An overview of the data flow is shown in \fref{fig:CompressorOverview}.
-\section{Components}
-\subsection{Encoder}
-\subsection{Data store}
-\subsection{Models}
-\section{Current problems}
-
 \begin{figure}
 \centering\includegraphics{CompressorV1Overview.png}
 \caption{Overview of prototype compressor}
 \label{fig:CompressorOverview}
 \end{figure}
+The overall design is based on a computational effects framework \cite{kiselyov_freer_} in order to minimise the interaction between logically separate; for example, the random number generator doesn't need to worry about I/O. Computational effects are rather suited to a pipeline style of processing.
+An overview of the data flow is shown in \fref{fig:CompressorOverview}.
+\section{Components}
+\subsection{Encoder}
+The encoder logic is primarily implemented in the range mapping functions of the model typeclass. The encoder iterates through the datastore, arithmetically coding each result using the range mapper.
+\subsection{Datastore}
+The datastore is a simple set of signs from the coding alphabet. The alphabet contains signs for \emph{sets}, \emph{sequences}, \emph{literals}, model description, and housekeeping details such as \emph{end of file}. Experiment results are stored as ordered tuples containing side information --- such as the control variables or a timestamp --- and the experimental result, typically a timeseries implemented as a sequence. 
+\subsection{Models}
+\subsubsection{Creation}
+If the model created by the model generation process is not an explicitly probabilistic model (for example, a regression model), then it is converted into one. For now, this is always the case, and conversion assumes additive white Gaussian noise.
+\subsubsection{Range mapper}
+Following \textcite{goos_arithmetic_2003} and \textcite{steinruecken_lossless_2014}, a model implements a function to map a symbol to a compact subinterval of $(0,1)$ and a new model.
+\section{Current problems}
+The current, primary problem is regarding exactly how to integrate the model of the experimental results into the probabilistic model required for coding the datastore. It may be desirable to only partially arithmetically code the datastore --- namely, the experimental results --- and dictionary code the data structure description.
 
 \section{Questions remaining about the test agent}
 The following questions must be answered before implementation of the relevant modules.
