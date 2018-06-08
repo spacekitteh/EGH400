@@ -52,7 +52,7 @@
 
 \title{Artificial curiosity in robotic cosmonauts \\ \large Progress report}
 
-\author{Sophie Taylor n6362575}
+\author{Sophie Taylor \\ n6362575 \small}
 \date{8/6/2018} % Activate to display a given date or no date (if empty),
          % otherwise the current date is printed 
 
@@ -63,14 +63,14 @@
 We discuss the notion of a cognitive architecture for an autonomous space exploration robot motivated by curiosity. We propose to implement an agent with such an architecture and investigate some of its properties.
 
 \chapter{Introduction}
-Space exploration is hard. One of the reasons for this is the distance. Despite the speed of light being incredibly fast to us, the universe is very big. The radio propagation time between Earth and a rover on Mars, for example, can be anywhere between 4 minutes and 24 minutes, depending on the time of (each planet's) year. The distance also means enormous free space path loss --- For example, an S band transmission experiences between 257 and 274 dB of loss. This greatly reduces the Shannon capacity of the communication channel, reducing the amount of science data which can be returned.
+Space exploration is hard. One of the reasons for this is the distance. Despite the speed of light being incredibly fast to us, the universe is very big. The radio propagation time between Earth and a rover on Mars, for example, can be anywhere between 4 minutes and 24 minutes, depending on the time of (each planet's) year. The distance also means enormous free space path loss --- for example, an S band transmission experiences between 257 and 274 dB of loss. This greatly reduces the Shannon capacity of the communication channel, thereby reducing the amount of science data which can be returned \cite{shannon_communication_1949}.
 
-Autonomy is crucial in overcoming these barriers. Autonomous control reduces the need for detailed command constructions; we can create relatively high level, autonomous GNC controllers which we issue high-level instructions such as ``Go to that interesting rock", and it can be expected to avoid getting stuck in a crater enroute without any human interaction. To reduce the amount of uplink bandwidth required, we can also preprocess the collected data, such as creating and transmitting only a histogram of the data, rather than the individual datapoints; we can also compress it. Combining these two functions is the goal this project is working towards.
+Autonomy is crucial in overcoming these barriers. Autonomous control reduces the need for detailed command constructions; we can create relatively high level, autonomous GNC controllers which we issue high-level instructions such as ``Go to that interesting rock", and it can be expected to avoid getting stuck in a crater enroute without any human interaction \cite{tompkins_global_2004}. To reduce the amount of uplink bandwidth required, we can also preprocess the collected data, such as creating and transmitting only a histogram of the data, rather than the individual datapoints; we can also compress it. Combining these two functions is the goal this project is working towards.
 
-It is desirable to make our robotic cosmonauts as autonomous as possible, so ideally we could just instruct them to ``go do some science and report any interesting discoveries". But how can we mathematically model ``Go do some science", or, for that matter, ``interesting discovery"?
-There are two main, complimentary approaches to the creation of autonomous systems: Control theory, and so-called artificial intelligence.
+It is desirable to make our robotic cosmonauts as autonomous as possible, so ideally we could just instruct them to ``go do some science and report any interesting discoveries". But how can we mathematically model ``go do some science", or, for that matter, ``interesting discovery"?
 
-Control theory is suited to systems where both the plant and desired behaviour are relatively easy to mathematically model, and the desired behaviour is not much more abstract than the plant. Artificial intelligence, on the other hand, is suitable when we find great difficulty in modeling the desired behaviour, which may be very abstract --- typically, we can only indirectly describe the behaviour by providing a measurement of how much we approve of it, also known as a reward metric.
+
+There are two main, complimentary approaches to the creation of autonomous systems: Control theory, and so-called artificial intelligence. Control theory is suited to systems where both the plant and desired behaviour are relatively easy to mathematically model, and the desired behaviour is not much more abstract than the plant. Artificial intelligence, on the other hand, is suitable when we find great difficulty in modeling the desired behaviour, which may be very abstract --- typically, we can only indirectly describe the behaviour by providing a measurement of how much we approve of it, also known as a reward metric.
 
 \section{Artificial curiosity}
 Let's describe science as ``systematic curiosity". But what is curiosity? We may describe it as acting in order to maximise the interestingness of our observations. We aren't interested in things which are completely predictable, nor about things which appear completely random. When we see probability, particularly in its Bayesian, belief-based interpretation \cite{cox_probability_1946}, turn up in abstract concepts, such as ``interaction", ``understanding" or ``interesting", it is helpful to turn to information theory. So, let us phrase it in such terms: interestingness is a nonmonotonic measure of similarity to previously understood (or modeled) information.
@@ -99,11 +99,11 @@ The notion of ``interestingness" has only recently been formalised in a satisfac
 \subsection{Lossless compression}
 Compression comes in two flavours: Lossy compression, where we allow errors in the reconstructed data to achieve greater compression ratios, and lossless compression, where we don't. Lossy compression is typically used for audio and visual data, primarily for entertainment purposes. We shall ignore lossy compression, and focus solely on lossless compression. 
 
-For decades, lossless compression research was mostly ad~hoc and focused on heuristics and intuition which combined both modeling and coding, such as the landmark development of the LZ77 algorithm by \textcite{ziv_universal_1977}, which forms the basis of a wide variety of compression algorithms in use today, such as DEFLATE \cite{deutsch_ghostaladdin.com_deflate_1996} as used in the popular .zip format. \textcite{steinruecken_lossless_2014} provided a rigorous approach to the fundamentals of lossless data compression, from information-theoretic first principles, for compressing basic mathematical objects such as sequences, sets, and multisets. \textcite{steinruecken_compressing_2016} then expanded on compressing other combinitorial objects. 
+For decades, lossless compression research was mostly ad~hoc and focused on heuristics and intuition which combined both modeling and coding, such as the landmark development of the LZ77 algorithm by \textcite{ziv_universal_1977}, which forms the basis of a wide variety of compression algorithms in use today, such as DEFLATE \cite{deutsch_ghostaladdin.com_deflate_1996} as used in the popular ZIP archive file format. \textcite{steinruecken_lossless_2014} provided a rigorous approach, from information-theoretic first principles, to the fundamentals of lossless data compression for compressing basic mathematical objects such as sequences, sets, and multisets. \textcite{steinruecken_compressing_2016} then expanded on compressing other combinitorial objects. 
 
 \subsection{Adaptive compression}
 Adaptive compression, of which our compression scheme necessarily falls under, is when the probability model of the data to be compressed isn't known in advance, and must be learned during the compression process itself \cite{steinruecken_lossless_2014}. A simple example is progressively learning a histogram of the data, and assigning the probability of a symbol being the frequency in which it has appeared so far, also called a 0-gram model \cite{steinruecken_lossless_2014}.
-\textcite{mahoney_adaptive_2005} introduces using adaptive weighting of multiple compression models via primitive neural networks.
+\textcite{mahoney_adaptive_2005} introduced the use of adaptive weighting of multiple compression models via primitive neural networks.
 
 \subsection{Context sensitive compression}
 A model is said to be \emph{context sensitive} when the probability distribution for a symbol depends on surrounding symbols. For example, in English text, after a ``q" appears, the next symbol is much more likely to be a ``u" than a ``z". An \emph{n-gram} model is when a symbol distribution depends on the $n$ symbols occuring immediately prior to it \cite{steinruecken_lossless_2014}. As we shall be focusing on physical processes, which are typically \emph{continuous}, our compression modeling must be context sensitive. 
@@ -118,6 +118,7 @@ Probabilistic graphical modeling is the study of probabilistic modeling using th
 Induction can be described as the problem of how we can justifiably extrapolate observations in order to make predictions. \textcite{rathmanner_philosophical_2011} provide an exposition on Solomonoff's theory of inductive inference \autocite{solomonoff_formal_1964, solomonoff_formal_1964-1}, a mathematical formalisation of Occam's Razor and Epicurus' Multiple Explanations theory, combined with Kolmogorov complexity \cite{li_introduction_2008} in order to predict the next symbol of an observed sequence.
 
 \section{Information theory}
+\textcite{bookstein_compression_1990} provides an overview of how information theory relates to compression.
 \subsection{Coding theory}
 Coding theory is the study of codes, sequences or other combinations of symbols from an alphabet which are imbued with meaning. Source coding is the study of transforming one code to another in order to reduce the amount of information needed for the representation of its contents. In the context of compression, there are two major classes of codes: Dictionary codes, which are also known as substitution codes, and arithmetic codes \cite{steinruecken_lossless_2014}. A simple example of a dictionary code for English is augmenting the Latin alphabet with a new symbol which means ``the", reducing the number of symbols required from three symbols to one. Arithmetic coding, on the other hand, encodes a single codeword representing the entire message by explicitly representing the decisions required to construct it. It is typically much easier to change the modeling process when using arithmetic coding, as dictionary codes tend to be intertwined with the model. Therefore, we shall be using arithmetic coding. One approach to implementing an arithmetic coder, particularly attractive in the context of using Haskell, is given by \textcite{goos_arithmetic_2003}. \textcite{steinruecken_lossless_2014} also provides an interesting implementation.
 
@@ -157,6 +158,8 @@ The initial prototype is merely choosing between several hardcoded models. Once 
 The overall design is based on a computational effects framework \cite{kiselyov_freer_} in order to minimise the interaction between logically separate aspects of the implementation; for example, the random number generator doesn't need to worry about I/O. Computational effects are rather suited to a pipeline style of processing.
 An overview of the data flow is shown in \fref{fig:CompressorOverview}.
 \section{Components}
+\subsection{Data generation}
+The data generator takes as arguments which process to simulate, as well as the relevant parameters for the process (such as the damping ratio and natural frequency of the damped oscillator).
 \subsection{Encoder}
 The encoder logic is primarily implemented in the range mapping functions of the model typeclass. The encoder iterates through the datastore, arithmetically coding each result using the range mapper.
 \subsection{Datastore}
@@ -183,7 +186,7 @@ The primary action available to the agent is to perform experiments. Thus, speci
 Control variables for continuous data corresponds to the base topological space of a fibre bundle. The time series is the fibre at that point.
 
 \subsection{When should we build new models?}
-Should building new models be part of the compressor that happens automatically, or should it be a deliberate action exposed to the reinforcement learning algorithm? 
+Should building new models be part of the compressor that happens automatically, or should it be a deliberate action exposed to the reinforcement learning algorithm? In the prototype, it 
 
 
 \chapter{Experiments and future investigation}
