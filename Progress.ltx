@@ -99,7 +99,7 @@ The notion of ``interestingness" has only recently been formalised in a satisfac
 \subsection{Lossless compression}
 Compression comes in two flavours: Lossy compression, where we allow errors in the reconstructed data to achieve greater compression ratios, and lossless compression, where we don't. Lossy compression is typically used for audio and visual data, primarily for entertainment purposes. We shall ignore lossy compression, and focus solely on lossless compression. 
 
-For decades, lossless compression research was mostly ad~hoc and focused on heuristics and intuition which combined both modeling and coding, such as the landmark development of the LZ77 algorithm by \textcite{ziv_universal_1977}, which forms the basis of a wide variety of compression algorithms in use today, such as DEFLATE \cite{deutsch_ghostaladdin.com_deflate_1996} as used in the popular .zip format. \textcite{steinruecken_lossless_2014} provided a rigorous approach to the fundamentals of lossless data compression from first principles, for compressing basic mathematical objects such as sequences, sets, and multisets. \textcite{steinruecken_compressing_2016} then expanded on compressing other combinitorial objects. 
+For decades, lossless compression research was mostly ad~hoc and focused on heuristics and intuition which combined both modeling and coding, such as the landmark development of the LZ77 algorithm by \textcite{ziv_universal_1977}, which forms the basis of a wide variety of compression algorithms in use today, such as DEFLATE \cite{deutsch_ghostaladdin.com_deflate_1996} as used in the popular .zip format. \textcite{steinruecken_lossless_2014} provided a rigorous approach to the fundamentals of lossless data compression, from information-theoretic first principles, for compressing basic mathematical objects such as sequences, sets, and multisets. \textcite{steinruecken_compressing_2016} then expanded on compressing other combinitorial objects. 
 
 \subsection{Adaptive compression}
 Adaptive compression, of which our compression scheme necessarily falls under, is when the probability model of the data to be compressed isn't known in advance, and must be learned during the compression process itself \cite{steinruecken_lossless_2014}. A simple example is progressively learning a histogram of the data, and assigning the probability of a symbol being the frequency in which it has appeared so far, also called a 0-gram model \cite{steinruecken_lossless_2014}.
@@ -115,7 +115,7 @@ There are many approaches to building predictive models of data. Some of the tec
 \subsection{Probabilistic graphical models}
 Probabilistic graphical modeling is the study of probabilistic modeling using the tools of graph theory. This can drastically simplify the resultant models, increasing both clarity and computational efficiency. \textcite{koller_probabilistic_2009} is an introductory monograph on the subject, covering varying types of models. \textcite{xiang_probabilistic_2002} studies them in the context of intelligent agents.
 \subsection{Induction}
-Induction can be described as the problem of how we can justifiably extrapolate observations in order to make predictions. \textcite{rathmanner_philosophical_2011} provide an exposition on Solomonoff's theory of inductive inference \autocite{solomonoff_formal_1964, solomonoff_formal_1964-1}, a mathematical formalisation of Occam's Razor and Epicurus' Multiple Explanations theory, combined with Kolmogorov complexity in order to predict the next symbol of an observed sequence.
+Induction can be described as the problem of how we can justifiably extrapolate observations in order to make predictions. \textcite{rathmanner_philosophical_2011} provide an exposition on Solomonoff's theory of inductive inference \autocite{solomonoff_formal_1964, solomonoff_formal_1964-1}, a mathematical formalisation of Occam's Razor and Epicurus' Multiple Explanations theory, combined with Kolmogorov complexity \cite{li_introduction_2008} in order to predict the next symbol of an observed sequence.
 
 \section{Information theory}
 \subsection{Coding theory}
@@ -174,16 +174,16 @@ Another problem lies in finding a satisfactory representation of the coding alph
 \section{Questions remaining about the test agent}
 The following questions must be answered before implementation of the relevant modules.
 \subsection{How should decisions be made regarding what action to take?}
-Possible options include neural networks, or a topological approach such as outlined by \textcite{lakkaraju_identifying_2016}. A weighted combination of the two after evaluation of the two, or exposure of the topological approach as input to the neural network, may be best.
+Possible options include neural networks, or a topological approach such as outlined by \textcite{lakkaraju_identifying_2016}. A weighted combination of the two after their evaluation, or exposure of the topological approach as input to the neural network, may be best.
 \subsection{What reinforcement learning algorithm should be chosen?}
 Episodic learning is a seemingly appropriate technique to employ, enabling an agent to ``look back" at past episodes in order to ``strengthen their reflexes". The specific choice depends on the technique used for deciding actions.
 \subsection{How can the agent move through the action space?}
-The primary action of the agent is to perform experiments. Thus, actions correspond to experiments with specific control variables. 
+The primary action available to the agent is to perform experiments. Thus, specific actions correspond to experiments with specific control variables. Moving through a continuous space of actions, such as by a gradient descent algorithm, is fairly straightforward. However, if the action space is a hybrid of discrete and continuous actions, then this becomes much more difficult.
 \subsection{How can the agent perform experiments?}
 Control variables for continuous data corresponds to the base topological space of a fibre bundle. The time series is the fibre at that point.
 
 \subsection{When should we build new models?}
-Should building new models be part of the compressor that happens automatically, or should it be an action exposed to the reinforcement learning algorithm? 
+Should building new models be part of the compressor that happens automatically, or should it be a deliberate action exposed to the reinforcement learning algorithm? 
 
 
 \chapter{Experiments and future investigation}
